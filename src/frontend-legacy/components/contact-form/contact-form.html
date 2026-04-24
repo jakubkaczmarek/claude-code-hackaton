@@ -1,0 +1,55 @@
+<div class="contact-form">
+  <h3 class="contact-form__title">Request a Viewing</h3>
+
+  <div class="contact-form__success" ng-show="showSuccess">
+    <p>&#10003; Thanks! We'll be in touch soon.</p>
+  </div>
+
+  <form name="contactForm" ng-show="!showSuccess" novalidate>
+
+    <div class="contact-form__field">
+      <label>Your Name *</label>
+      <input type="text" class="contact-form__input" ng-model="formData.name" name="name" required />
+      <span class="contact-form__error" ng-show="submitted && contactForm.name.$invalid">Name is required.</span>
+    </div>
+
+    <div class="contact-form__field">
+      <label>Email *</label>
+      <input type="email" class="contact-form__input" ng-model="formData.email" name="email" required />
+      <span class="contact-form__error" ng-show="submitted && contactForm.email.$invalid">Please enter a valid email.</span>
+    </div>
+
+    <div class="contact-form__field">
+      <label>Phone</label>
+      <input type="text" class="contact-form__input" ng-model="formData.phone" name="phone" />
+    </div>
+
+    <div class="contact-form__field">
+      <label>Message *</label>
+      <textarea class="contact-form__input contact-form__textarea" ng-model="formData.message" name="message" required placeholder="I'm interested in this property..."></textarea>
+      <span class="contact-form__error" ng-show="submitted && contactForm.message.$invalid">Message is required.</span>
+    </div>
+
+    <div class="contact-form__field">
+      <label>Preferred Contact</label>
+      <label class="contact-form__radio">
+        <input type="radio" ng-model="formData.preferredContact" value="email" /> Email
+      </label>
+      <label class="contact-form__radio">
+        <input type="radio" ng-model="formData.preferredContact" value="phone" /> Phone
+      </label>
+    </div>
+
+    <div class="contact-form__field">
+      <label>Preferred Viewing Date</label>
+      <input type="date" class="contact-form__input" ng-model="formData.viewingDate" name="viewingDate" />
+    </div>
+
+    <div class="contact-form__errors" ng-show="showErrors">
+      <p>Please fix the errors above before submitting.</p>
+    </div>
+
+    <button type="button" class="contact-form__submit" ng-click="submitForm()">Send Request</button>
+
+  </form>
+</div>

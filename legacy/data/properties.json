@@ -1,0 +1,374 @@
+[
+  {
+    "id": "prop-001",
+    "title": "Spacious Family Home with Pool",
+    "description": "This stunning 5-bedroom family home sits on a generous 650 sqm corner block in the heart of Riverside. Featuring an open-plan kitchen and living area, the home flows effortlessly to a covered alfresco entertaining space and sparkling in-ground pool. The master suite includes a walk-in wardrobe and ensuite. Additional highlights include ducted air conditioning, a double lock-up garage, and solar panels. Walking distance to top-rated schools and local cafes.",
+    "type": "house",
+    "status": "for-sale",
+    "price": 1250000,
+    "priceType": "sale",
+    "bedrooms": 5,
+    "bathrooms": 3,
+    "parkingSpaces": 2,
+    "areaSqft": 2800,
+    "address": {
+      "street": "14 Magnolia Drive",
+      "suburb": "Riverside",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78701",
+      "country": "USA"
+    },
+    "location": "Riverside",
+    "coordinates": { "lat": 30.2568, "lng": -97.7278 },
+    "images": [
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800"
+    ],
+    "agentId": "agent-001",
+    "features": ["Pool", "Solar panels", "Ducted air conditioning", "Double garage", "Alfresco entertaining", "Walk-in wardrobe"],
+    "yearBuilt": 2018,
+    "listedAt": "2024-10-05"
+  },
+  {
+    "id": "prop-002",
+    "title": "Modern City Apartment — River Views",
+    "description": "A beautifully presented 2-bedroom apartment on the 8th floor with sweeping views over the Colorado River. The open-plan living and dining area opens to a large balcony, perfect for entertaining. The gourmet kitchen features stone benchtops and quality appliances. Both bedrooms are generously sized with built-in wardrobes. Includes one secure car space and a storage cage. Walking distance to restaurants, gyms, and public transport.",
+    "type": "apartment",
+    "status": "for-sale",
+    "price": 685000,
+    "priceType": "sale",
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "parkingSpaces": 1,
+    "areaSqft": 920,
+    "address": {
+      "street": "802/55 River Street",
+      "suburb": "Riverside",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78701",
+      "country": "USA"
+    },
+    "location": "Riverside",
+    "coordinates": { "lat": 30.2601, "lng": -97.7310 },
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+    ],
+    "agentId": "agent-001",
+    "features": ["River views", "Balcony", "Stone benchtops", "Secure parking", "Storage cage", "Gym access"],
+    "yearBuilt": 2021,
+    "listedAt": "2024-11-12"
+  },
+  {
+    "id": "prop-003",
+    "title": "Charming Lakefront Cottage",
+    "description": "Escape to this enchanting 3-bedroom cottage right on the shores of Lake Austin. Original character features including exposed timber beams and a stone fireplace have been thoughtfully preserved alongside modern updates. The wrap-around veranda offers uninterrupted lake views, and the private jetty gives direct water access. A rare opportunity to secure one of the last affordable lakefront properties in the area.",
+    "type": "house",
+    "status": "under-offer",
+    "price": 950000,
+    "priceType": "sale",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "parkingSpaces": 2,
+    "areaSqft": 1650,
+    "address": {
+      "street": "7 Lakeview Lane",
+      "suburb": "Lakewood",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78734",
+      "country": "USA"
+    },
+    "location": "Lakewood",
+    "coordinates": { "lat": 30.3712, "lng": -97.8945 },
+    "images": [
+      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800",
+      "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800"
+    ],
+    "agentId": "agent-001",
+    "features": ["Lakefront", "Private jetty", "Fireplace", "Wrap-around veranda", "Character features"],
+    "yearBuilt": 1978,
+    "listedAt": "2024-09-20"
+  },
+  {
+    "id": "prop-004",
+    "title": "Luxury Highland Park Mansion",
+    "description": "An extraordinary estate set on over 1 acre in Austin's most prestigious suburb. This 6-bedroom mansion features a grand entry foyer with double-height ceilings, a home theatre, wine cellar, and a resort-style outdoor area with pool, spa, and outdoor kitchen. The chef's kitchen is fitted with top-of-the-line European appliances. A 4-car garage, separate guest house, and state-of-the-art home automation system complete this unrivalled offering.",
+    "type": "house",
+    "status": "for-sale",
+    "price": 4500000,
+    "priceType": "sale",
+    "bedrooms": 6,
+    "bathrooms": 5,
+    "parkingSpaces": 4,
+    "areaSqft": 7200,
+    "address": {
+      "street": "1 Prestige Court",
+      "suburb": "Highland Park",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78731",
+      "country": "USA"
+    },
+    "location": "Highland Park",
+    "coordinates": { "lat": 30.3204, "lng": -97.7612 },
+    "images": [
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+    ],
+    "agentId": "agent-002",
+    "features": ["Pool", "Spa", "Home theatre", "Wine cellar", "Guest house", "4-car garage", "Home automation", "Outdoor kitchen"],
+    "yearBuilt": 2020,
+    "listedAt": "2024-08-01"
+  },
+  {
+    "id": "prop-005",
+    "title": "Studio Apartment — Westfield Quarter",
+    "description": "A well-appointed studio in the heart of Westfield's vibrant dining and entertainment precinct. Compact and efficient, this property suits first-home buyers or investors looking for strong rental yield. The open-plan layout maximises space, with a modern kitchen, combined living area, and a private courtyard. Includes one car space and access to a rooftop communal terrace with city views.",
+    "type": "apartment",
+    "status": "for-sale",
+    "price": 320000,
+    "priceType": "sale",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "parkingSpaces": 1,
+    "areaSqft": 480,
+    "address": {
+      "street": "305/12 Market Square",
+      "suburb": "Westfield",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78702",
+      "country": "USA"
+    },
+    "location": "Westfield",
+    "coordinates": { "lat": 30.2649, "lng": -97.7208 },
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
+    ],
+    "agentId": "agent-004",
+    "features": ["Rooftop terrace", "Courtyard", "Secure parking", "City views"],
+    "yearBuilt": 2019,
+    "listedAt": "2024-12-01"
+  },
+  {
+    "id": "prop-006",
+    "title": "Commercial Office Space — CBD Fringe",
+    "description": "A 2,200 sqft commercial office suite on the ground floor of a modern mixed-use development. The space is configured as open-plan with a private boardroom, two meeting rooms, a reception area, and a fully equipped kitchenette. High ceilings, polished concrete floors, and large shopfront windows provide an impressive client-facing presence. 6 dedicated car spaces included. Ideal for professional services, tech firms, or medical tenants.",
+    "type": "commercial",
+    "status": "for-rent",
+    "price": 8500,
+    "priceType": "monthly",
+    "bedrooms": 0,
+    "bathrooms": 2,
+    "parkingSpaces": 6,
+    "areaSqft": 2200,
+    "address": {
+      "street": "Ground Floor, 88 Commerce Boulevard",
+      "suburb": "Westfield",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78702",
+      "country": "USA"
+    },
+    "location": "Westfield",
+    "coordinates": { "lat": 30.2623, "lng": -97.7189 },
+    "images": [
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800",
+      "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800"
+    ],
+    "agentId": "agent-002",
+    "features": ["Open plan", "Boardroom", "2 meeting rooms", "Reception area", "Kitchenette", "6 car spaces", "Shopfront"],
+    "yearBuilt": 2017,
+    "listedAt": "2024-10-18"
+  },
+  {
+    "id": "prop-007",
+    "title": "Brand New Townhouse — Cedar Valley",
+    "description": "Just completed by award-winning builder Meridian Constructions, this 4-bedroom townhouse offers luxury finishes across three light-filled levels. The ground floor features an open-plan kitchen, dining, and living area that opens to a private courtyard. The top floor master suite enjoys a built-in bar, oversized ensuite, and sweeping treetop views. Engineered oak flooring, stone surfaces, and custom joinery throughout. 12-month builder warranty included.",
+    "type": "condo",
+    "status": "for-sale",
+    "price": 875000,
+    "priceType": "sale",
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "parkingSpaces": 2,
+    "areaSqft": 2100,
+    "address": {
+      "street": "3 Meridian Way",
+      "suburb": "Cedar Valley",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78745",
+      "country": "USA"
+    },
+    "location": "Cedar Valley",
+    "coordinates": { "lat": 30.2041, "lng": -97.7863 },
+    "images": [
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+    ],
+    "agentId": "agent-001",
+    "features": ["Brand new", "Engineered oak floors", "Stone surfaces", "Private courtyard", "Treetop views", "Builder warranty"],
+    "yearBuilt": 2024,
+    "listedAt": "2024-11-28"
+  },
+  {
+    "id": "prop-008",
+    "title": "Renovated 2-Bed Unit for Rent",
+    "description": "A freshly renovated 2-bedroom unit in a quiet, well-maintained complex of eight. The updated kitchen features new appliances and stone benchtops, and the open-plan living area opens to a private courtyard. Both bedrooms include ceiling fans and built-in wardrobes. Utilities connection ready, pet-friendly (small dogs considered). Close to Northgate shopping centre, bus routes, and parks. Available immediately.",
+    "type": "apartment",
+    "status": "for-rent",
+    "price": 2200,
+    "priceType": "monthly",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "parkingSpaces": 1,
+    "areaSqft": 780,
+    "address": {
+      "street": "5/18 Banksia Street",
+      "suburb": "Northgate",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78753",
+      "country": "USA"
+    },
+    "location": "Northgate",
+    "coordinates": { "lat": 30.3891, "lng": -97.7102 },
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800"
+    ],
+    "agentId": "agent-003",
+    "features": ["Renovated", "Stone benchtops", "Courtyard", "Pet friendly", "Built-in wardrobes"],
+    "yearBuilt": 2005,
+    "listedAt": "2024-12-03"
+  },
+  {
+    "id": "prop-009",
+    "title": "Large Family Home — Sold",
+    "description": "A classic 4-bedroom family home on a quiet cul-de-sac, SOLD at auction to a growing family. This property featured a spacious backyard, double garage, and a well-proportioned layout across a single level. The sale demonstrates strong demand in the Lakewood market for large, well-located family homes in the $800k–$1.1M range.",
+    "type": "house",
+    "status": "sold",
+    "price": 1050000,
+    "priceType": "sale",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "parkingSpaces": 2,
+    "areaSqft": 2200,
+    "address": {
+      "street": "22 Willow Close",
+      "suburb": "Lakewood",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78734",
+      "country": "USA"
+    },
+    "location": "Lakewood",
+    "coordinates": { "lat": 30.3688, "lng": -97.8901 },
+    "images": [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800"
+    ],
+    "agentId": "agent-004",
+    "features": ["Double garage", "Large backyard", "Cul-de-sac", "Single level"],
+    "yearBuilt": 2001,
+    "listedAt": "2024-07-14"
+  },
+  {
+    "id": "prop-010",
+    "title": "Vacant Land — Cedar Valley Estate",
+    "description": "A 1,200 sqm flat building block in the master-planned Cedar Valley Estate, ready for your dream home. Services are connected to the boundary (power, water, sewer, NBN). The estate has generous building covenants to protect your investment. Surrounded by established homes and walking distance to new parklands and the future town centre. Build now or hold as a land banking strategy.",
+    "type": "land",
+    "status": "for-sale",
+    "price": 285000,
+    "priceType": "sale",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parkingSpaces": 0,
+    "areaSqft": 12917,
+    "address": {
+      "street": "Lot 47 Cedar Valley Estate",
+      "suburb": "Cedar Valley",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78745",
+      "country": "USA"
+    },
+    "location": "Cedar Valley",
+    "coordinates": { "lat": 30.2088, "lng": -97.7921 },
+    "images": [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800"
+    ],
+    "agentId": "agent-002",
+    "features": ["Services connected", "Flat block", "Master-planned estate", "Building covenants"],
+    "yearBuilt": 0,
+    "listedAt": "2024-09-09"
+  },
+  {
+    "id": "prop-011",
+    "title": "Executive 3-Bed Apartment — Northgate",
+    "description": "A premier executive apartment occupying the entire 12th floor of the Northgate Pinnacle building. Floor-to-ceiling windows frame panoramic views in three directions. The chef's kitchen with butler's pantry opens to a vast living and dining area. Three king-sized bedrooms each have ensuites. A private rooftop terrace of 400 sqft completes this exceptional offering. Concierge, pool, and fitness centre in-building.",
+    "type": "apartment",
+    "status": "for-rent",
+    "price": 5800,
+    "priceType": "monthly",
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "parkingSpaces": 2,
+    "areaSqft": 2400,
+    "address": {
+      "street": "1200/1 Pinnacle Place",
+      "suburb": "Northgate",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78753",
+      "country": "USA"
+    },
+    "location": "Northgate",
+    "coordinates": { "lat": 30.3922, "lng": -97.7145 },
+    "images": [
+      "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800",
+      "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=800"
+    ],
+    "agentId": "agent-003",
+    "features": ["Entire floor", "Panoramic views", "Rooftop terrace", "Concierge", "Pool", "Fitness centre", "Butler's pantry"],
+    "yearBuilt": 2023,
+    "listedAt": "2024-11-01"
+  },
+  {
+    "id": "prop-012",
+    "title": "Highland Park Condo — Secure Complex",
+    "description": "A well-presented 2-bedroom condo in a boutique complex of only 12 residences in sought-after Highland Park. The open-plan living and dining area enjoys north-facing light and opens to a sheltered balcony with garden views. The kitchen has been tastefully updated with stone benchtops and stainless-steel appliances. Both bedrooms have built-in wardrobes. Includes one basement car space and a storage locker. Currently tenanted at $2,600/month, making it an ideal investment or owner-occupier purchase.",
+    "type": "condo",
+    "status": "for-sale",
+    "price": 520000,
+    "priceType": "sale",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "parkingSpaces": 1,
+    "areaSqft": 860,
+    "address": {
+      "street": "6/29 Garden Crescent",
+      "suburb": "Highland Park",
+      "city": "Austin",
+      "state": "TX",
+      "postcode": "78731",
+      "country": "USA"
+    },
+    "location": "Highland Park",
+    "coordinates": { "lat": 30.3241, "lng": -97.7589 },
+    "images": [
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800",
+      "https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?w=800"
+    ],
+    "agentId": "agent-004",
+    "features": ["North-facing", "Garden views", "Balcony", "Stone benchtops", "Basement parking", "Storage locker", "Currently tenanted"],
+    "yearBuilt": 2014,
+    "listedAt": "2024-10-29"
+  }
+]

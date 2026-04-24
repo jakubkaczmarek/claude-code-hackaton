@@ -1,0 +1,46 @@
+[
+  {
+    "id": "agent-001",
+    "name": "Sarah Mitchell",
+    "title": "Senior Property Consultant",
+    "email": "sarah.mitchell@austinrealty.com",
+    "phone": "+1 (512) 555-0101",
+    "bio": "Sarah has over 12 years of experience in the Austin real estate market, specialising in residential sales and luxury properties. She is known for her tenacious negotiation style and deep knowledge of local neighbourhoods.",
+    "photo": "https://randomuser.me/api/portraits/women/44.jpg",
+    "agency": "Austin Realty Group",
+    "agencyLogo": "https://placehold.co/120x40?text=Austin+Realty"
+  },
+  {
+    "id": "agent-002",
+    "name": "Marcus Webb",
+    "title": "Commercial & Investment Specialist",
+    "email": "marcus.webb@austinrealty.com",
+    "phone": "+1 (512) 555-0202",
+    "bio": "Marcus focuses on commercial properties and investment portfolios across the greater Austin area. With a background in finance, he helps clients maximise returns on their real estate investments.",
+    "photo": "https://randomuser.me/api/portraits/men/32.jpg",
+    "agency": "Austin Realty Group",
+    "agencyLogo": "https://placehold.co/120x40?text=Austin+Realty"
+  },
+  {
+    "id": "agent-003",
+    "name": "Priya Sharma",
+    "title": "Residential Leasing Consultant",
+    "email": "priya.sharma@homefindtx.com",
+    "phone": "+1 (512) 555-0303",
+    "bio": "Priya specialises in rental properties and tenant placement throughout Austin. She is dedicated to finding the right home for every renter and ensuring smooth lease agreements for landlords.",
+    "photo": "https://randomuser.me/api/portraits/women/68.jpg",
+    "agency": "HomeFind Texas",
+    "agencyLogo": "https://placehold.co/120x40?text=HomeFind+TX"
+  },
+  {
+    "id": "agent-004",
+    "name": "Daniel Torres",
+    "title": "Property Consultant",
+    "email": "daniel.torres@homefindtx.com",
+    "phone": "+1 (512) 555-0404",
+    "bio": "Daniel is a results-driven agent with expertise in first-home buyer properties and mid-range residential sales. He prides himself on transparent communication and guiding buyers through every step of the process.",
+    "photo": "https://randomuser.me/api/portraits/men/76.jpg",
+    "agency": "HomeFind Texas",
+    "agencyLogo": "https://placehold.co/120x40?text=HomeFind+TX"
+  }
+]

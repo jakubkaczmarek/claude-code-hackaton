@@ -1,0 +1,62 @@
+<div class="filter-panel">
+  <div class="filter-panel__row">
+    <div class="filter-panel__field">
+      <label>Search</label>
+      <input type="text" class="filter-panel__input" ng-model="filters.keyword" ng-change="updateFilter('keyword', filters.keyword)" placeholder="Keyword..." />
+    </div>
+
+    <div class="filter-panel__field">
+      <label>Type</label>
+      <select class="filter-panel__select" ng-model="filters.type" ng-change="updateFilter('type', filters.type)">
+        <option value="">Any</option>
+        <option value="house">House</option>
+        <option value="apartment">Apartment</option>
+        <option value="condo">Condo</option>
+        <option value="commercial">Commercial</option>
+        <option value="land">Land</option>
+      </select>
+    </div>
+
+    <div class="filter-panel__field">
+      <label>Status</label>
+      <select class="filter-panel__select" ng-model="filters.status" ng-change="updateFilter('status', filters.status)">
+        <option value="">Any</option>
+        <option value="for-sale">For Sale</option>
+        <option value="for-rent">For Rent</option>
+        <option value="sold">Sold</option>
+        <option value="under-offer">Under Offer</option>
+      </select>
+    </div>
+
+    <div class="filter-panel__field">
+      <label>Location</label>
+      <select class="filter-panel__select" ng-model="filters.location" ng-change="updateFilter('location', filters.location)">
+        <option value="">Any</option>
+        <option ng-repeat="loc in locations" value="{{loc.name}}">{{loc.name}}</option>
+      </select>
+    </div>
+
+    <div class="filter-panel__field">
+      <label>Min Beds</label>
+      <select class="filter-panel__select" ng-model="filters.bedroomsMin" ng-change="updateFilter('bedroomsMin', filters.bedroomsMin)">
+        <option ng-repeat="opt in bedroomOptions" value="{{opt.value}}">{{opt.label}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="filter-panel__row">
+    <div class="filter-panel__field">
+      <label>Min Price ($)</label>
+      <input type="number" class="filter-panel__input" ng-model="filters.priceMin" ng-change="updateFilter('priceMin', filters.priceMin)" placeholder="0" />
+    </div>
+
+    <div class="filter-panel__field">
+      <label>Max Price ($)</label>
+      <input type="number" class="filter-panel__input" ng-model="filters.priceMax" ng-change="updateFilter('priceMax', filters.priceMax)" placeholder="Any" />
+    </div>
+
+    <div class="filter-panel__field filter-panel__field--clear">
+      <button class="filter-panel__clear-btn" ng-click="clearAll()">Clear Filters</button>
+    </div>
+  </div>
+</div>

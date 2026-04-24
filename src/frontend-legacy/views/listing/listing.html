@@ -1,0 +1,33 @@
+<div class="listing-page">
+
+  <filter-panel></filter-panel>
+
+  <div class="listing-page__results-bar">
+    <div class="listing-page__count">
+      Showing {{properties.length}} of {{totalCount}} properties
+    </div>
+    <div class="listing-page__sort">
+      <label>Sort by:</label>
+      <select ng-model="sortKey" ng-change="changeSort()">
+        <option value="newest">Newest</option>
+        <option value="price-asc">Price (Low &rarr; High)</option>
+        <option value="price-desc">Price (High &rarr; Low)</option>
+        <option value="bedrooms-desc">Most Bedrooms</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="listing-page__loading" ng-show="loading">
+    <p>Loading properties...</p>
+  </div>
+
+  <div class="listing-page__empty" ng-show="!loading && properties.length === 0">
+    <p>No properties match your search.</p>
+    <a href="" ng-click="clearFilters()">Clear filters</a>
+  </div>
+
+  <div class="property-grid" ng-show="!loading && properties.length > 0">
+    <property-card ng-repeat="prop in properties" property="prop"></property-card>
+  </div>
+
+</div>
