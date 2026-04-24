@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const DATA_DIR = path.join(__dirname, '../../legacy/data');
-const APP_DIR = path.join(__dirname, '../../legacy/app');
+const APP_DIR = path.join(__dirname, '../frontend-legacy');
 
 app.use(cors());
 app.use(express.static(APP_DIR));
@@ -64,7 +64,7 @@ app.get('*', (req, res) => {
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
-    res.status(503).send('Frontend not yet built. Place the AngularJS app in /legacy/app/.');
+    res.status(503).send('Frontend not found. Expected at /src/frontend-legacy/index.html');
   }
 });
 

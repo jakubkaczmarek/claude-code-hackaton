@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="realEstateBoardApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Board</title>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/card.css">
+  <link rel="stylesheet" href="assets/css/filter-panel.css">
+  <link rel="stylesheet" href="assets/css/detail.css">
+</head>
+<body>
+
+  <!-- navbar -->
+  <nav class="navbar" ng-controller="NavController">
+    <a class="navbar__brand" href="#/properties">&#127968; PropBoard</a>
+    <div class="navbar__links">
+      <a class="navbar__link" href="#/properties">Properties</a>
+      <a class="navbar__link" href="#/favorites">
+        Favorites
+        <span class="navbar__fav-badge" ng-show="favCount > 0">{{favCount}}</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <ng-view></ng-view>
+  </div>
+
+  <!-- 1. angular core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular-route.min.js"></script>
+
+  <!-- 2. module + config -->
+  <script src="app.module.js"></script>
+  <script src="app.config.js"></script>
+
+  <!-- 3. navbar controller -->
+  <script>
+    app.controller('NavController', function($scope, FavoritesService) {
+      $scope.favCount = FavoritesService.getCount();
+      $scope.$on('favoritesChanged', function() {
+        $scope.favCount = FavoritesService.getCount();
+      });
+    });
+  </script>
+
+  <!-- 4. services -->
+  <script src="services/property.service.js"></script>
+  <script src="services/agent.service.js"></script>
+  <script src="services/filter.service.js"></script>
+  <script src="services/favorites.service.js"></script>
+
+  <!-- 5. directives -->
+  <script src="components/badge/badge.directive.js"></script>
+  <script src="components/property-card/property-card.directive.js"></script>
+  <script src="components/filter-panel/filter-panel.directive.js"></script>
+  <script src="components/contact-form/contact-form.directive.js"></script>
+
+  <!-- 6. controllers -->
+  <script src="views/listing/listing.controller.js"></script>
+  <script src="views/detail/detail.controller.js"></script>
+  <script src="views/favorites/favorites.controller.js"></script>
+
+</body>
+</html>

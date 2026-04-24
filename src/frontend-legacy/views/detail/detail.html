@@ -1,0 +1,116 @@
+<div class="detail-page" ng-show="!loading && property">
+
+  <div class="detail-page__breadcrumb">
+    <a href="#/properties">All Properties</a> &rsaquo; {{property.title}}
+  </div>
+
+  <div class="detail-page__layout">
+
+    <div class="detail-page__main">
+
+      <!-- image gallery -->
+      <div class="detail-gallery">
+        <div class="detail-gallery__main">
+          <img ng-src="{{activeImage}}" alt="{{property.title}}" class="detail-gallery__main-img" onerror="this.src='assets/img/placeholder.jpg'" />
+          <button class="detail-gallery__fav-btn" ng-click="toggleFav()">
+            <span ng-show="isFav">&#9829; Saved</span>
+            <span ng-show="!isFav">&#9825; Save</span>
+          </button>
+        </div>
+        <div class="detail-gallery__thumbs" ng-show="property.images.length > 1">
+          <img ng-repeat="img in property.images" ng-src="{{img}}" class="detail-gallery__thumb" ng-class="{'detail-gallery__thumb--active': img === activeImage}" ng-click="setActiveImage(img)" alt="photo" />
+        </div>
+      </div>
+
+      <!-- header -->
+      <div class="detail-header">
+        <div class="detail-header__top">
+          <h1 class="detail-header__title">{{property.title}}</h1>
+          <status-badge status="{{property.status}}"></status-badge>
+        </div>
+        <div class="detail-header__price">{{priceDisplay}}</div>
+        <div class="detail-header__address">{{getFullAddress()}}</div>
+      </div>
+
+      <!-- stats -->
+      <div class="detail-stats">
+        <div class="detail-stats__item" ng-show="property.bedrooms > 0">
+          <span class="detail-stats__icon">&#127968;</span>
+          <span class="detail-stats__value">{{property.bedrooms}}</span>
+          <span class="detail-stats__label">Bedrooms</span>
+        </div>
+        <div class="detail-stats__item" ng-show="property.bathrooms > 0">
+          <span class="detail-stats__icon">&#128706;</span>
+          <span class="detail-stats__value">{{property.bathrooms}}</span>
+          <span class="detail-stats__label">Bathrooms</span>
+        </div>
+        <div class="detail-stats__item" ng-show="property.parkingSpaces > 0">
+          <span class="detail-stats__icon">&#128663;</span>
+          <span class="detail-stats__value">{{property.parkingSpaces}}</span>
+          <span class="detail-stats__label">Parking</span>
+        </div>
+        <div class="detail-stats__item">
+          <span class="detail-stats__icon">&#9634;</span>
+          <span class="detail-stats__value">{{property.areaSqft}}</span>
+          <span class="detail-stats__label">sqft</span>
+        </div>
+        <div class="detail-stats__item" ng-show="property.yearBuilt > 0">
+          <span class="detail-stats__icon">&#128197;</span>
+          <span class="detail-stats__value">{{property.yearBuilt}}</span>
+          <span class="detail-stats__label">Built</span>
+        </div>
+      </div>
+
+      <!-- description -->
+      <div class="detail-description">
+        <h2>About this property</h2>
+        <p>{{property.description}}</p>
+      </div>
+
+      <!-- features -->
+      <div class="detail-features" ng-show="property.features && property.features.length > 0">
+        <h2>Features</h2>
+        <div class="detail-features__list">
+          <span class="detail-features__tag" ng-repeat="f in property.features">{{f}}</span>
+        </div>
+      </div>
+
+      <!-- map -->
+      <div class="detail-map" ng-show="mapUrl">
+        <h2>Location</h2>
+        <iframe ng-src="{{mapUrl}}" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+
+      <!-- related -->
+      <div class="detail-related" ng-show="related.length > 0">
+        <h2>Similar Properties</h2>
+        <div class="property-grid property-grid--small">
+          <property-card ng-repeat="prop in related" property="prop"></property-card>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- agent sidebar -->
+    <div class="detail-page__sidebar" ng-show="agent">
+      <div class="agent-card">
+        <img class="agent-card__photo" ng-src="{{agent.photo}}" alt="{{agent.name}}" onerror="this.src='assets/img/placeholder.jpg'" />
+        <div class="agent-card__name">{{agent.name}}</div>
+        <div class="agent-card__title">{{agent.title}}</div>
+        <div class="agent-card__agency">{{agent.agency}}</div>
+        <div class="agent-card__contacts">
+          <a class="agent-card__contact-link" ng-href="tel:{{agent.phone}}">&#128222; {{agent.phone}}</a>
+          <a class="agent-card__contact-link" ng-href="mailto:{{agent.email}}">&#9993; {{agent.email}}</a>
+        </div>
+      </div>
+
+      <contact-form agent="agent"></contact-form>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="detail-page__loading" ng-show="loading">
+  <p>Loading property...</p>
+</div>

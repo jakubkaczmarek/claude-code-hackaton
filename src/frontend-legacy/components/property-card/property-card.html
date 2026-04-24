@@ -1,0 +1,30 @@
+<div class="property-card">
+  <div class="property-card__image-wrap">
+    <img class="property-card__image" ng-src="{{thumbImg}}" alt="{{property.title}}" onerror="this.src='assets/img/placeholder.jpg'" />
+    <status-badge status="{{property.status}}"></status-badge>
+    <button class="property-card__fav-btn" ng-click="toggleFav()" title="Save property">
+      <span ng-show="isFav">&#9829;</span>
+      <span ng-show="!isFav">&#9825;</span>
+    </button>
+  </div>
+
+  <div class="property-card__body">
+    <div class="property-card__price">{{priceDisplay}}</div>
+    <div class="property-card__title">{{property.title}}</div>
+    <div class="property-card__address">{{addressLine}}</div>
+
+    <div class="property-card__stats">
+      <span class="property-card__stat" ng-show="property.bedrooms > 0">
+        &#127968; {{property.bedrooms}} bed
+      </span>
+      <span class="property-card__stat" ng-show="property.bathrooms > 0">
+        &#128706; {{property.bathrooms}} bath
+      </span>
+      <span class="property-card__stat">
+        &#9634; {{property.areaSqft}} sqft
+      </span>
+    </div>
+
+    <a class="property-card__link" href="#/properties/{{property.id}}">View Details &rarr;</a>
+  </div>
+</div>

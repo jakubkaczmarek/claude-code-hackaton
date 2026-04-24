@@ -1,0 +1,99 @@
+.property-card {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+
+.property-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.property-card__image-wrap {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+
+.property-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.property-card__image-wrap status-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.property-card__fav-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 32px;
+  text-align: center;
+  color: #c0392b;
+  padding: 0;
+}
+
+.property-card__fav-btn:hover {
+  background: #fff;
+}
+
+.property-card__body {
+  padding: 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.property-card__price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a3a5c;
+}
+
+.property-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  margin-top: 2px;
+}
+
+.property-card__address {
+  font-size: 12px;
+  color: #777;
+}
+
+.property-card__stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.property-card__stat {
+  font-size: 12px;
+  color: #555;
+}
+
+.property-card__link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #2c6fad;
+  font-weight: 600;
+}

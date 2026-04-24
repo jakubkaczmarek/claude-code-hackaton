@@ -1,0 +1,19 @@
+<div class="favorites-page">
+
+  <h1 class="favorites-page__title">Your Saved Properties</h1>
+  <p class="favorites-page__count" ng-show="!isEmpty">{{properties.length}} properties saved</p>
+
+  <div class="favorites-page__loading" ng-show="loading">
+    <p>Loading...</p>
+  </div>
+
+  <div class="favorites-page__empty" ng-show="!loading && isEmpty">
+    <p>&#9825; You haven't saved any properties yet.</p>
+    <a href="#/properties" class="favorites-page__cta">Browse all properties</a>
+  </div>
+
+  <div class="property-grid" ng-show="!loading && !isEmpty && properties.length > 0">
+    <property-card ng-repeat="prop in properties" property="prop"></property-card>
+  </div>
+
+</div>
