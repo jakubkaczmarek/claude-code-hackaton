@@ -2,6 +2,9 @@
 
 This project is a migration from AngularJS (1.x) to Angular (17+). Follow these rules for every file touched.
 
+**Full conventions for the target Angular app:** [`docs/conventions.md`](docs/conventions.md)  
+**Architecture decisions:** [`docs/adr/`](docs/adr/)
+
 ## Migration Rules
 
 ### Components (highest priority)
