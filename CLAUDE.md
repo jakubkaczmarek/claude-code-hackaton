@@ -83,3 +83,28 @@ This project is a migration from AngularJS (1.x) to Angular (17+). Follow these 
 ## Angular Version Target
 Angular 17+ with standalone components (no NgModule unless the team decides otherwise).
 Use `@if` / `@for` control flow blocks (Angular 17+) over `*ngIf` / `*ngFor` when writing new templates.
+
+## Available Skills
+
+Use the appropriate skill from `.agent/skills/` for every migration task. Do NOT migrate manually without consulting the relevant skill first.
+
+| Task | Skill |
+|------|-------|
+| Analyze the full app before starting | `.agent/skills/pre-migration-analysis/SKILL.md` |
+| Migrate a `.controller()` or `.component()` | `.agent/skills/migrate-component/SKILL.md` |
+| Migrate a `.service()` or `.factory()` | `.agent/skills/migrate-service/SKILL.md` |
+| Migrate `$routeProvider` / `$stateProvider` routing | `.agent/skills/migrate-route/SKILL.md` |
+| Migrate a `.filter()` | `.agent/skills/migrate-filter/SKILL.md` |
+| Migrate `angular.module()` bootstrap | `.agent/skills/migrate-module/SKILL.md` |
+| Generate unit tests for a migrated file | `.agent/skills/generate-tests/SKILL.md` |
+| Review a PR for migration correctness | `.agent/skills/pr-reviewer/SKILL.md` |
+
+### Migration Order
+Always follow this sequence:
+1. Run `pre-migration-analysis` to map the full app
+2. Migrate leaf services first (`migrate-service`)
+3. Migrate filters (`migrate-filter`)
+4. Migrate leaf components, then containers (`migrate-component`)
+5. Migrate routing (`migrate-route`)
+6. Migrate the module bootstrap last (`migrate-module`)
+7. Generate tests throughout (`generate-tests`)
