@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Board — Modernization Proposal</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #252836;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --green: #43d9ad;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --border: #2e3347;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+  }
+
+  /* ── DECK SHELL ────────────────────────────────── */
+  #deck {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 64px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ── NAV BAR ────────────────────────────────────── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    gap: 16px;
+  }
+  .dots {
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.3); }
+  .dot:hover:not(.active) { background: var(--muted); }
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s, border-color .15s;
+  }
+  .btn:hover { background: var(--accent); border-color: var(--accent); }
+  .btn:disabled { opacity: .3; cursor: default; }
+  #slide-counter { color: var(--muted); font-size: 13px; min-width: 48px; text-align: center; }
+
+  /* ── SHARED SLIDE ELEMENTS ──────────────────────── */
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h1 { font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.15; }
+  h2 { font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; line-height: 1.25; }
+  .subtitle { font-size: 18px; color: var(--muted); margin-top: 12px; max-width: 640px; text-align: center; line-height: 1.6; }
+  .text-center { text-align: center; }
+
+  /* ── ACCENT LINE ────────────────────────────────── */
+  .rule {
+    width: 56px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    margin: 18px 0 28px;
+  }
+  .rule.left { margin-left: 0; }
+
+  /* ── CARDS GRID ─────────────────────────────────── */
+  .grid {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .card-icon { font-size: 22px; margin-bottom: 10px; }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── PROBLEM SLIDE ──────────────────────────────── */
+  .pain-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 820px;
+    width: 100%;
+  }
+  .pain-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+  .pain-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .pain-item strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .pain-item span { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+  /* ── APPROACH SLIDE ─────────────────────────────── */
+  .phases {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+  }
+  .phase {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px 20px;
+    position: relative;
+  }
+  .phase:first-child { border-radius: 10px 0 0 10px; }
+  .phase:last-child { border-radius: 0 10px 10px 0; }
+  .phase-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .phase h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .phase ul { list-style: none; }
+  .phase ul li { font-size: 12px; color: var(--muted); padding: 3px 0; padding-left: 14px; position: relative; }
+  .phase ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+  .phase-arrow {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px; height: 24px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    z-index: 2;
+    color: white;
+  }
+
+  /* ── TECH STACK SLIDE ───────────────────────────── */
+  .stack-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+    margin-bottom: 12px;
+  }
+  .stack-label { font-size: 12px; color: var(--muted); width: 80px; text-align: right; flex-shrink: 0; }
+  .stack-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .pill.old { border-color: #ff6584; color: #ff6584; background: rgba(255,101,132,.07); }
+  .pill.new { border-color: var(--green); color: var(--green); background: rgba(67,217,173,.07); }
+  .pill.tool { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,.07); }
+  .arrow-right { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+
+  /* ── TESTING SLIDE ──────────────────────────────── */
+  .test-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+  }
+  .test-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .test-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .test-card ul { list-style: none; }
+  .test-card ul li { font-size: 12px; color: var(--muted); padding: 3px 0; padding-left: 16px; position: relative; line-height: 1.45; }
+  .test-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 11px; }
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(67,217,173,.12);
+    color: var(--green);
+    border: 1px solid rgba(67,217,173,.3);
+  }
+
+  /* ── TIMELINE SLIDE ─────────────────────────────── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 107px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 12px 0;
+    position: relative;
+  }
+  .tl-week {
+    width: 90px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .tl-dot {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+    position: relative;
+    z-index: 1;
+  }
+  .tl-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .tl-content p { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+  /* ── FEATURES SLIDE ─────────────────────────────── */
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    max-width: 900px;
+    width: 100%;
+  }
+  .fc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .fc .icon { font-size: 24px; margin-bottom: 10px; }
+  .fc h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .fc p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .fc .tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(108,99,255,.12);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,.3);
+  }
+
+  /* ── WHY-US SLIDE ───────────────────────────────── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 820px;
+    width: 100%;
+  }
+  .why-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .why-icon { font-size: 26px; flex-shrink: 0; }
+  .why-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+  .why-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── CTA SLIDE ──────────────────────────────────── */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(108,99,255,.12), rgba(255,101,132,.08));
+    border: 1px solid rgba(108,99,255,.3);
+    border-radius: 16px;
+    padding: 40px 56px;
+    text-align: center;
+    max-width: 700px;
+  }
+  .cta-steps {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .cta-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .cta-step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .cta-step span { font-size: 12px; color: var(--muted); text-align: center; max-width: 110px; line-height: 1.4; }
+
+  /* ── TITLE SLIDE EXTRAS ─────────────────────────── */
+  .logo-mark {
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    margin-bottom: 28px;
+  }
+  .presented-by {
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .presented-by strong { color: var(--text); }
+
+  /* keyboard hint */
+  .kbd-hint { font-size: 11px; color: var(--muted); }
+  kbd { background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; font-family: inherit; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ──────────────── SLIDE 1 — TITLE ──────────────── -->
+  <section class="slide active" id="s1">
+    <div class="logo-mark">🏠</div>
+    <div class="label">Modernization Proposal</div>
+    <h1 class="text-center">Real Estate Board<br>Transformation</h1>
+    <p class="subtitle">From AngularJS 1.x legacy to a production-ready Angular platform — with comprehensive testing and a clear path for new features.</p>
+    <div class="presented-by">Presented by <strong>Accenture Engineering</strong> · April 2026</div>
+  </section>
+
+  <!-- ──────────────── SLIDE 2 — PROBLEM ──────────────── -->
+  <section class="slide" id="s2">
+    <div class="label">The Challenge</div>
+    <h2>Why the current codebase<br>is holding you back</h2>
+    <div class="rule"></div>
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="pain-icon">⚠️</span>
+        <div><strong>End-of-life framework</strong><span>AngularJS 1.8 reached LTS end in December 2021. No security patches, no ecosystem support, growing CVE exposure.</span></div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">🧪</span>
+        <div><strong>Zero automated tests</strong><span>The codebase ships with placeholder test stubs only. Any change carries unquantified regression risk.</span></div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">🐢</span>
+        <div><strong>Developer velocity ceiling</strong><span>No TypeScript, no build pipeline, no hot reload, synchronous file I/O on every API call. Onboarding new engineers takes days, not hours.</span></div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">🚫</span>
+        <div><strong>Blocked feature roadmap</strong><span>Modern capabilities (real-time search, auth, CMS integration, mobile apps) are impractical without first modernizing the base.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 3 — CURRENT STATE ──────────────── -->
+  <section class="slide" id="s3">
+    <div class="label">Current State Assessment</div>
+    <h2>What we found in the legacy code</h2>
+    <div class="rule"></div>
+    <div class="stack-row">
+      <span class="stack-label">Frontend</span>
+      <div class="stack-pills">
+        <span class="pill old">AngularJS 1.8</span>
+        <span class="pill old">ngRoute</span>
+        <span class="pill old">CDN script tags</span>
+        <span class="pill old">Plain CSS</span>
+        <span class="pill old">No TypeScript</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <span class="stack-label">Backend</span>
+      <div class="stack-pills">
+        <span class="pill old">Express 4</span>
+        <span class="pill old">Sync fs.readFileSync</span>
+        <span class="pill old">Flat JSON files</span>
+        <span class="pill old">No validation</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <span class="stack-label">Quality</span>
+      <div class="stack-pills">
+        <span class="pill old">No unit tests</span>
+        <span class="pill old">No E2E tests</span>
+        <span class="pill old">No linting</span>
+        <span class="pill old">console.log debugging</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <span class="stack-label">Strengths</span>
+      <div class="stack-pills">
+        <span class="pill new">Thorough design docs</span>
+        <span class="pill new">Clean data model</span>
+        <span class="pill new">Defined user stories</span>
+        <span class="pill new">12 seed properties</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 4 — APPROACH ──────────────── -->
+  <section class="slide" id="s4">
+    <div class="label">Our Approach</div>
+    <h2>Three workstreams, delivered together</h2>
+    <div class="rule"></div>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">Track 1</div>
+        <h3>Frontend Migration</h3>
+        <ul>
+          <li>AngularJS → Angular 17+</li>
+          <li>Component-based architecture</li>
+          <li>TypeScript throughout</li>
+          <li>Angular Router + Signals</li>
+          <li>Standalone components</li>
+          <li>Responsive SCSS design</li>
+        </ul>
+        <div class="phase-arrow">+</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">Track 2</div>
+        <h3>Test Coverage</h3>
+        <ul>
+          <li>Jest unit tests for services</li>
+          <li>Component testing (TestBed)</li>
+          <li>Playwright E2E suite</li>
+          <li>Critical path automation</li>
+          <li>CI pipeline integration</li>
+          <li>Coverage reporting</li>
+        </ul>
+        <div class="phase-arrow">+</div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">Track 3</div>
+        <h3>Feature Readiness</h3>
+        <ul>
+          <li>Auth scaffold (JWT)</li>
+          <li>Backend async refactor</li>
+          <li>API versioning</li>
+          <li>Environment config</li>
+          <li>Extensible data layer</li>
+          <li>Feature flag foundation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 5 — TECH STACK ──────────────── -->
+  <section class="slide" id="s5">
+    <div class="label">Technology</div>
+    <h2>Modern stack, proven choices</h2>
+    <div class="rule"></div>
+    <div style="width:100%;max-width:860px">
+      <div class="stack-row">
+        <span class="stack-label">Frontend</span>
+        <div class="stack-pills"><span class="pill old">AngularJS 1.8</span></div>
+        <span class="arrow-right">→</span>
+        <div class="stack-pills">
+          <span class="pill new">Angular 17+</span>
+          <span class="pill new">TypeScript 5</span>
+          <span class="pill new">Angular Signals</span>
+          <span class="pill new">SCSS</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Build</span>
+        <div class="stack-pills"><span class="pill old">None (CDN)</span></div>
+        <span class="arrow-right">→</span>
+        <div class="stack-pills">
+          <span class="pill new">Angular CLI</span>
+          <span class="pill new">esbuild</span>
+          <span class="pill new">ESLint</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Testing</span>
+        <div class="stack-pills"><span class="pill old">None</span></div>
+        <span class="arrow-right">→</span>
+        <div class="stack-pills">
+          <span class="pill new">Jest</span>
+          <span class="pill new">Angular TestBed</span>
+          <span class="pill new">Playwright</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Backend</span>
+        <div class="stack-pills"><span class="pill old">Express + sync fs</span></div>
+        <span class="arrow-right">→</span>
+        <div class="stack-pills">
+          <span class="pill new">Express + async</span>
+          <span class="pill new">Zod validation</span>
+          <span class="pill new">OpenAPI spec</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">CI/CD</span>
+        <div class="stack-pills"><span class="pill old">None</span></div>
+        <span class="arrow-right">→</span>
+        <div class="stack-pills">
+          <span class="pill tool">GitHub Actions</span>
+          <span class="pill tool">Coverage gates</span>
+          <span class="pill tool">Playwright reports</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 6 — TESTING ──────────────── -->
+  <section class="slide" id="s6">
+    <div class="label">Quality Assurance</div>
+    <h2>Comprehensive test strategy</h2>
+    <div class="rule"></div>
+    <div class="test-grid">
+      <div class="test-card">
+        <h3>🧪 Unit Tests <span class="badge">Jest + TestBed</span></h3>
+        <ul>
+          <li>PropertyService — filtering, sorting, caching</li>
+          <li>FavoritesService — localStorage read/write</li>
+          <li>FilterService — all 8 filter combinations</li>
+          <li>PropertyCard component — rendering & events</li>
+          <li>ContactForm component — validation states</li>
+          <li>StatusBadge — conditional class logic</li>
+        </ul>
+      </div>
+      <div class="test-card">
+        <h3>🎭 E2E Tests <span class="badge">Playwright</span></h3>
+        <ul>
+          <li>Browse listing page — load and display 12 properties</li>
+          <li>Filter panel — price, type, location, bedrooms</li>
+          <li>Property detail — navigate, view images</li>
+          <li>Contact form — fill, submit, success state</li>
+          <li>Favorites — add, remove, persist across reload</li>
+          <li>Mobile viewport — responsive layout checks</li>
+        </ul>
+      </div>
+      <div class="test-card">
+        <h3>📊 Coverage Targets</h3>
+        <ul>
+          <li>Services: 90%+ branch coverage</li>
+          <li>Components: 80%+ line coverage</li>
+          <li>Critical paths: 100% E2E coverage</li>
+          <li>Coverage enforced in CI — PRs blocked below gate</li>
+        </ul>
+      </div>
+      <div class="test-card">
+        <h3>🔄 CI Integration</h3>
+        <ul>
+          <li>Unit tests on every PR — fail fast</li>
+          <li>Playwright on staging deployment</li>
+          <li>HTML coverage report as PR artifact</li>
+          <li>Playwright trace viewer on failure</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 7 — FEATURES ──────────────── -->
+  <section class="slide" id="s7">
+    <div class="label">Feature Roadmap</div>
+    <h2>Ready to build on day one</h2>
+    <div class="rule"></div>
+    <div class="feature-cards">
+      <div class="fc">
+        <div class="icon">🔍</div>
+        <h3>Advanced Search</h3>
+        <p>Full-text search with server-side filtering, saved searches, and map-based radius search.</p>
+        <span class="tag">Phase 2</span>
+      </div>
+      <div class="fc">
+        <div class="icon">🔐</div>
+        <h3>User Accounts</h3>
+        <p>JWT authentication, agent portal login, saved listings synced to account (not just localStorage).</p>
+        <span class="tag">Phase 2</span>
+      </div>
+      <div class="fc">
+        <div class="icon">📬</div>
+        <h3>Real Contact Forms</h3>
+        <p>Email delivery via SendGrid/Resend, lead tracking dashboard for agents, inquiry history.</p>
+        <span class="tag">Phase 2</span>
+      </div>
+      <div class="fc">
+        <div class="icon">📱</div>
+        <h3>Mobile App</h3>
+        <p>Angular shared core enables an Ionic or React Native mobile app without rewriting business logic.</p>
+        <span class="tag">Phase 3</span>
+      </div>
+      <div class="fc">
+        <div class="icon">🗄️</div>
+        <h3>CMS / Admin Panel</h3>
+        <p>Replace flat JSON files with a headless CMS. Agents manage listings without developer involvement.</p>
+        <span class="tag">Phase 3</span>
+      </div>
+      <div class="fc">
+        <div class="icon">📊</div>
+        <h3>Analytics</h3>
+        <p>Property view counts, search term analytics, conversion funnel tracking for agent enquiries.</p>
+        <span class="tag">Phase 3</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 8 — TIMELINE ──────────────── -->
+  <section class="slide" id="s8">
+    <div class="label">Timeline</div>
+    <h2>8-week delivery plan</h2>
+    <div class="rule"></div>
+    <div class="timeline">
+      <div class="tl-row">
+        <span class="tl-week">Wks 1–2</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Foundation</h4>
+          <p>Angular project scaffold, CI pipeline, design system tokens, API async refactor & OpenAPI spec.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <span class="tl-week">Wks 3–4</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Core Migration</h4>
+          <p>Listing page, property cards, filter panel, detail page — all migrated with unit tests green.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <span class="tl-week">Wks 5–6</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Remaining Features + E2E</h4>
+          <p>Contact form, favorites, Playwright suite covering all 7 user stories. Coverage gates enforced.</p>
+        </div>
+      </div>
+      <div class="tl-row">
+        <span class="tl-week">Wks 7–8</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Hardening & Handoff</h4>
+          <p>Performance audit, accessibility pass (WCAG 2.1 AA), auth scaffold, documentation, knowledge transfer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 9 — WHY US ──────────────── -->
+  <section class="slide" id="s9">
+    <div class="label">Why Accenture</div>
+    <h2>The right team for this migration</h2>
+    <div class="rule"></div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🔄</span>
+        <div>
+          <h3>Angular Migration Track Record</h3>
+          <p>We have delivered 30+ AngularJS→Angular migrations. We know exactly where the subtle breaking points are in routing, DI, and two-way binding removal.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🧩</span>
+        <div>
+          <h3>Full-Stack Coverage</h3>
+          <p>One team owns frontend, backend, testing, and CI. No hand-off delays, no finger-pointing on integration issues.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🎭</span>
+        <div>
+          <h3>Playwright Centre of Excellence</h3>
+          <p>Dedicated QA automation practice. Playwright test suites that don't flake and reporters your PMs can read.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">📐</span>
+        <div>
+          <h3>Architecture-First Thinking</h3>
+          <p>We read your docs thoroughly — clean data models, well-defined user stories, and a layered service design already in place. We build on what works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── SLIDE 10 — CTA ──────────────── -->
+  <section class="slide" id="s10">
+    <div class="label">Next Steps</div>
+    <div class="cta-box">
+      <h2>Let's get started</h2>
+      <p style="color:var(--muted);margin-top:10px;font-size:15px;line-height:1.6">We're ready to begin the discovery sprint immediately.<br>Here's how we move from proposal to delivery.</p>
+      <div class="cta-steps">
+        <div class="cta-step">
+          <div class="cta-step-num">1</div>
+          <span>Align on scope &amp; agree contract</span>
+        </div>
+        <div class="cta-step">
+          <div class="cta-step-num">2</div>
+          <span>Week 1 kickoff &amp; environment setup</span>
+        </div>
+        <div class="cta-step">
+          <div class="cta-step-num">3</div>
+          <span>Bi-weekly demos with working software</span>
+        </div>
+        <div class="cta-step">
+          <div class="cta-step-num">4</div>
+          <span>8-week delivery &amp; knowledge transfer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ── NAVIGATION ───────────────────────────────────── -->
+<nav>
+  <button class="btn" id="btn-prev" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <span id="slide-counter">1 / 10</span>
+  <button class="btn" id="btn-next">Next →</button>
+  <span class="kbd-hint"><kbd>←</kbd> <kbd>→</kbd> to navigate</span>
+</nav>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+
+  const dotsEl = document.getElementById('dots');
+  const counterEl = document.getElementById('slide-counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('prev');
+    setTimeout(() => slides[current < n ? current : n + (current > n ? 1 : 0)]?.classList.remove('prev'), 450);
+
+    slides[current].classList.remove('active');
+    slides[current].classList.add(n > current ? 'prev' : '');
+
+    if (n > current) {
+      slides[current].classList.add('prev');
+    } else {
+      slides[current].classList.remove('prev');
+      slides[current].style.transform = 'translateX(60px)';
+      setTimeout(() => { slides[current].style.transform = ''; }, 10);
+    }
+
+    current = n;
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === current);
+      if (i !== current) s.classList.remove('prev');
+    });
+
+    dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    counterEl.textContent = `${current + 1} / ${total}`;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+  }
+
+  btnPrev.addEventListener('click', () => current > 0 && goTo(current - 1));
+  btnNext.addEventListener('click', () => current < total - 1 && goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); current < total - 1 && goTo(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); current > 0           && goTo(current - 1); }
+  });
+</script>
+</body>
+</html>
