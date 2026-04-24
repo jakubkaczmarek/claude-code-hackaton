@@ -1,0 +1,16 @@
+<nav class="navbar">
+  <a class="navbar__brand" routerLink="/properties">&#127968; PropBoard</a>
+  <div class="navbar__links">
+    <a class="navbar__link" routerLink="/properties">Properties</a>
+    <a class="navbar__link" routerLink="/favorites">
+      Favorites
+      @if (favCount() > 0) {
+        <span class="navbar__fav-badge">{{ favCount() }}</span>
+      }
+    </a>
+  </div>
+</nav>
+
+<div class="main-content">
+  <router-outlet />
+</div>

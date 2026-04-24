@@ -1,0 +1,41 @@
+<div class="listing-page">
+
+  <app-filter-panel />
+
+  <div class="listing-page__results-bar">
+    <div class="listing-page__count">
+      Showing {{ properties().length }} of {{ totalCount() }} properties
+    </div>
+    <div class="listing-page__sort">
+      <label>Sort by:</label>
+      <select [ngModel]="sortKey()" (ngModelChange)="changeSort($event)">
+        <option value="newest">Newest</option>
+        <option value="price-asc">Price (Low &rarr; High)</option>
+        <option value="price-desc">Price (High &rarr; Low)</option>
+        <option value="bedrooms-desc">Most Bedrooms</option>
+      </select>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="listing-page__loading">
+      <p>Loading properties...</p>
+    </div>
+  }
+
+  @if (!loading() && properties().length === 0) {
+    <div class="listing-page__empty">
+      <p>No properties match your search.</p>
+      <a href="" (click)="clearFilters(); $event.preventDefault()">Clear filters</a>
+    </div>
+  }
+
+  @if (!loading() && properties().length > 0) {
+    <div class="property-grid">
+      @for (prop of properties(); track prop.id) {
+        <app-property-card [property]="prop" />
+      }
+    </div>
+  }
+
+</div>

@@ -1,0 +1,30 @@
+<div class="favorites-page">
+
+  <h1 class="favorites-page__title">Your Saved Properties</h1>
+
+  @if (!isEmpty()) {
+    <p class="favorites-page__count">{{ properties().length }} properties saved</p>
+  }
+
+  @if (loading()) {
+    <div class="favorites-page__loading">
+      <p>Loading...</p>
+    </div>
+  }
+
+  @if (!loading() && isEmpty()) {
+    <div class="favorites-page__empty">
+      <p>&#9825; You haven't saved any properties yet.</p>
+      <a routerLink="/properties" class="favorites-page__cta">Browse all properties</a>
+    </div>
+  }
+
+  @if (!loading() && !isEmpty() && properties().length > 0) {
+    <div class="property-grid">
+      @for (prop of properties(); track prop.id) {
+        <app-property-card [property]="prop" />
+      }
+    </div>
+  }
+
+</div>

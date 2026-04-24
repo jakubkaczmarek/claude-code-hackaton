@@ -1,0 +1,31 @@
+<div class="property-card">
+  <div class="property-card__image-wrap">
+    <img class="property-card__image" [src]="thumbImg()" [alt]="property().title" onerror="this.src='assets/img/placeholder.jpg'" />
+    <app-status-badge [status]="property().status" />
+    <button class="property-card__fav-btn" (click)="toggleFav()" title="Save property">
+      @if (isFav()) {
+        <span>&#9829;</span>
+      } @else {
+        <span>&#9825;</span>
+      }
+    </button>
+  </div>
+
+  <div class="property-card__body">
+    <div class="property-card__price">{{ priceDisplay() }}</div>
+    <div class="property-card__title">{{ property().title }}</div>
+    <div class="property-card__address">{{ addressLine() }}</div>
+
+    <div class="property-card__stats">
+      @if (property().bedrooms > 0) {
+        <span class="property-card__stat">&#127968; {{ property().bedrooms }} bed</span>
+      }
+      @if (property().bathrooms > 0) {
+        <span class="property-card__stat">&#128706; {{ property().bathrooms }} bath</span>
+      }
+      <span class="property-card__stat">&#9634; {{ property().areaSqft }} sqft</span>
+    </div>
+
+    <a class="property-card__link" [routerLink]="['/properties', property().id]">View Details &rarr;</a>
+  </div>
+</div>

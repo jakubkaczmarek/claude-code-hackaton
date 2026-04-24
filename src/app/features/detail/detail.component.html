@@ -1,0 +1,153 @@
+@if (loading()) {
+  <div class="detail-page__loading">
+    <p>Loading property...</p>
+  </div>
+}
+
+@if (!loading()) {
+  @if (property(); as prop) {
+    <div class="detail-page">
+
+      <div class="detail-page__breadcrumb">
+        <a routerLink="/properties">All Properties</a> &rsaquo; {{ prop.title }}
+      </div>
+
+      <div class="detail-page__layout">
+
+        <div class="detail-page__main">
+
+          <!-- image gallery -->
+          <div class="detail-gallery">
+            <div class="detail-gallery__main">
+              <img [src]="activeImage()" [alt]="prop.title" class="detail-gallery__main-img" onerror="this.src='assets/img/placeholder.jpg'" />
+              <button class="detail-gallery__fav-btn" (click)="toggleFav()">
+                @if (isFav()) {
+                  <span>&#9829; Saved</span>
+                } @else {
+                  <span>&#9825; Save</span>
+                }
+              </button>
+            </div>
+            @if (prop.images.length > 1) {
+              <div class="detail-gallery__thumbs">
+                @for (img of prop.images; track img) {
+                  <img [src]="img"
+                       class="detail-gallery__thumb"
+                       [class.detail-gallery__thumb--active]="img === activeImage()"
+                       (click)="setActiveImage(img)"
+                       alt="photo" />
+                }
+              </div>
+            }
+          </div>
+
+          <!-- header -->
+          <div class="detail-header">
+            <div class="detail-header__top">
+              <h1 class="detail-header__title">{{ prop.title }}</h1>
+              <app-status-badge [status]="prop.status" />
+            </div>
+            <div class="detail-header__price">{{ priceDisplay() }}</div>
+            <div class="detail-header__address">{{ getFullAddress() }}</div>
+          </div>
+
+          <!-- stats -->
+          <div class="detail-stats">
+            @if (prop.bedrooms > 0) {
+              <div class="detail-stats__item">
+                <span class="detail-stats__icon">&#127968;</span>
+                <span class="detail-stats__value">{{ prop.bedrooms }}</span>
+                <span class="detail-stats__label">Bedrooms</span>
+              </div>
+            }
+            @if (prop.bathrooms > 0) {
+              <div class="detail-stats__item">
+                <span class="detail-stats__icon">&#128706;</span>
+                <span class="detail-stats__value">{{ prop.bathrooms }}</span>
+                <span class="detail-stats__label">Bathrooms</span>
+              </div>
+            }
+            @if (prop.parkingSpaces > 0) {
+              <div class="detail-stats__item">
+                <span class="detail-stats__icon">&#128663;</span>
+                <span class="detail-stats__value">{{ prop.parkingSpaces }}</span>
+                <span class="detail-stats__label">Parking</span>
+              </div>
+            }
+            <div class="detail-stats__item">
+              <span class="detail-stats__icon">&#9634;</span>
+              <span class="detail-stats__value">{{ prop.areaSqft }}</span>
+              <span class="detail-stats__label">sqft</span>
+            </div>
+            @if (prop.yearBuilt > 0) {
+              <div class="detail-stats__item">
+                <span class="detail-stats__icon">&#128197;</span>
+                <span class="detail-stats__value">{{ prop.yearBuilt }}</span>
+                <span class="detail-stats__label">Built</span>
+              </div>
+            }
+          </div>
+
+          <!-- description -->
+          <div class="detail-description">
+            <h2>About this property</h2>
+            <p>{{ prop.description }}</p>
+          </div>
+
+          <!-- features -->
+          @if (prop.features?.length > 0) {
+            <div class="detail-features">
+              <h2>Features</h2>
+              <div class="detail-features__list">
+                @for (f of prop.features; track f) {
+                  <span class="detail-features__tag">{{ f }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- map -->
+          @if (mapUrl()) {
+            <div class="detail-map">
+              <h2>Location</h2>
+              <iframe [src]="mapUrl()" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+          }
+
+          <!-- related -->
+          @if (related().length > 0) {
+            <div class="detail-related">
+              <h2>Similar Properties</h2>
+              <div class="property-grid property-grid--small">
+                @for (rel of related(); track rel.id) {
+                  <app-property-card [property]="rel" />
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+
+        <!-- agent sidebar -->
+        @if (agent(); as ag) {
+          <div class="detail-page__sidebar">
+            <div class="agent-card">
+              <img class="agent-card__photo" [src]="ag.photo" [alt]="ag.name" onerror="this.src='assets/img/placeholder.jpg'" />
+              <div class="agent-card__name">{{ ag.name }}</div>
+              <div class="agent-card__title">{{ ag.title }}</div>
+              <div class="agent-card__agency">{{ ag.agency }}</div>
+              <div class="agent-card__contacts">
+                <a class="agent-card__contact-link" [href]="'tel:' + ag.phone">&#128222; {{ ag.phone }}</a>
+                <a class="agent-card__contact-link" [href]="'mailto:' + ag.email">&#9993; {{ ag.email }}</a>
+              </div>
+            </div>
+
+            <app-contact-form [agent]="ag" />
+          </div>
+        }
+
+      </div>
+
+    </div>
+  }
+}

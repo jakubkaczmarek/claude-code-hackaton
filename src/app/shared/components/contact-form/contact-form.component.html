@@ -1,0 +1,67 @@
+<div class="contact-form">
+  <h3 class="contact-form__title">Request a Viewing</h3>
+
+  @if (showSuccess()) {
+    <div class="contact-form__success">
+      <p>&#10003; Thanks! We'll be in touch soon.</p>
+    </div>
+  }
+
+  @if (!showSuccess()) {
+    <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" novalidate>
+
+      <div class="contact-form__field">
+        <label>Your Name *</label>
+        <input type="text" class="contact-form__input" [(ngModel)]="formData.name" name="name" required />
+        @if (submitted() && contactForm.controls['name']?.invalid) {
+          <span class="contact-form__error">Name is required.</span>
+        }
+      </div>
+
+      <div class="contact-form__field">
+        <label>Email *</label>
+        <input type="email" class="contact-form__input" [(ngModel)]="formData.email" name="email" required />
+        @if (submitted() && contactForm.controls['email']?.invalid) {
+          <span class="contact-form__error">Please enter a valid email.</span>
+        }
+      </div>
+
+      <div class="contact-form__field">
+        <label>Phone</label>
+        <input type="text" class="contact-form__input" [(ngModel)]="formData.phone" name="phone" />
+      </div>
+
+      <div class="contact-form__field">
+        <label>Message *</label>
+        <textarea class="contact-form__input contact-form__textarea" [(ngModel)]="formData.message" name="message" required placeholder="I'm interested in this property..."></textarea>
+        @if (submitted() && contactForm.controls['message']?.invalid) {
+          <span class="contact-form__error">Message is required.</span>
+        }
+      </div>
+
+      <div class="contact-form__field">
+        <label>Preferred Contact</label>
+        <label class="contact-form__radio">
+          <input type="radio" [(ngModel)]="formData.preferredContact" name="preferredContact" value="email" /> Email
+        </label>
+        <label class="contact-form__radio">
+          <input type="radio" [(ngModel)]="formData.preferredContact" name="preferredContact" value="phone" /> Phone
+        </label>
+      </div>
+
+      <div class="contact-form__field">
+        <label>Preferred Viewing Date</label>
+        <input type="date" class="contact-form__input" [(ngModel)]="formData.viewingDate" name="viewingDate" />
+      </div>
+
+      @if (showErrors()) {
+        <div class="contact-form__errors">
+          <p>Please fix the errors above before submitting.</p>
+        </div>
+      }
+
+      <button type="submit" class="contact-form__submit">Send Request</button>
+
+    </form>
+  }
+</div>
