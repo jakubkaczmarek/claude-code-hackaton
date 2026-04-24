@@ -15,10 +15,17 @@ For each pattern found, report:
 - The pattern detected
 - Suggested Angular equivalent
 
-Group results by file. At the end give a summary: total files with AngularJS remnants, and a priority order for what to tackle next:
-1. Controllers (`.controller(`) — migrate to `@Component`
-2. Services/factories (`.service(`, `.factory(`) — migrate to `@Injectable`
-3. Directives (`.directive(`) — migrate to `@Component` or `@Directive`
-4. Filters (`.filter(`) — migrate to `@Pipe`
-5. Routing config (`$routeProvider`, `ui-router`) — migrate to `RouterModule`
-6. Remaining template patterns (`ng-*`) — update in place
+Group results by file. At the end give a summary: total files with AngularJS remnants, and a priority order for what to tackle next (each item includes the skill to use):
+
+1. **Services/factories** (`.service(`, `.factory(`) → use skill `.agent/skills/migrate-service/SKILL.md`
+2. **Filters** (`.filter(`) → use skill `.agent/skills/migrate-filter/SKILL.md`
+3. **Leaf components / controllers** (`.controller(`, `.component(`) → use skill `.agent/skills/migrate-component/SKILL.md`
+4. **Directives** (`.directive(`) → use skill `.agent/skills/migrate-component/SKILL.md`
+5. **Routing config** (`$routeProvider`, `$stateProvider`, `ui-router`) → use skill `.agent/skills/migrate-route/SKILL.md`
+6. **Bootstrap / module** (`angular.module(`) → use skill `.agent/skills/migrate-module/SKILL.md` (run last)
+7. **Remaining template patterns** (`ng-*`) — these will be cleaned up automatically as part of the component migrations above
+
+For each file listed, suggest the exact command to run next, e.g.:
+```
+/migrate src/app/auth/auth.service.js
+```

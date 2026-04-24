@@ -37,11 +37,11 @@ Component: <name>
 Selector:  <app-name>
 
 Inputs:
-  < binding 'foo'  →  @Input() foo: <type>
-  = binding 'bar'  →  @Input() bar / @Output() barChange
+  < binding 'foo'  →  foo = input<type>()
+  = binding 'bar'  →  bar = model<type>()        (two-way: replaces @Input+@Output pair)
 
 Outputs:
-  & binding 'onSave'  →  @Output() save = new EventEmitter<...>()
+  & binding 'onSave'  →  save = output<...>()
 
 Dependencies to inject:
   $http          →  HttpClient
@@ -67,7 +67,7 @@ Create `<component-name>.component.ts` following these rules:
 
 ### Class Structure
 ```ts
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, model, inject } from '@angular/core';
 
 @Component({
   selector: 'app-<name>',
@@ -76,10 +76,11 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ChangeDetect
   styleUrl: './<name>.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class <Name>Component implements OnInit, OnDestroy {
-  // @Input / @Output properties first
+export class <Name>Component {
+  // Signal inputs / outputs / models first
   // then private injected services via inject()
-  // then public state properties
+  // then internal signal state
+  // then computed()
   // then lifecycle methods
   // then public methods (bound in template)
   // then private helpers
@@ -163,19 +164,20 @@ Create `<component-name>.component.html` applying these replacements:
 
 ## Step 5 — Declare Imports in the Component
 
-Add all required Angular imports to the `imports` array of the standalone component:
+Add only what the template actually uses to the `imports` array. Never import `CommonModule`.
 
 ```ts
 imports: [
-  CommonModule,       // or specific: NgIf, NgFor, AsyncPipe
-  FormsModule,        // if ng-model / ngModel used
-  RouterModule,       // if routerLink used
-  ReactiveFormsModule // if reactive forms used
+  // @if / @for / @switch control flow requires NO imports — they are built-in
+  FormsModule,          // only if [(ngModel)] used
+  ReactiveFormsModule,  // only if reactive forms used
+  RouterLink,           // only if routerLink used (not RouterModule)
+  AsyncPipe,            // only if async pipe used in template
+  // import other standalone components, pipes, and directives directly
 ]
 ```
 
-Prefer specific imports over `CommonModule` for better tree-shaking.
-With Angular 17 control flow (`@if`, `@for`) no `NgIf`/`NgFor` import is needed.
+Do NOT import `NgIf`, `NgFor`, or `NgSwitch` — these are the `*ngIf`/`*ngFor` directives that we do not use. Use `@if`/`@for`/`@switch` control flow blocks instead.
 
 ---
 

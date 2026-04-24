@@ -2,6 +2,9 @@
 
 This project is a migration from AngularJS (1.x) to Angular (17+). Follow these rules for every file touched.
 
+**Full conventions for the target Angular app:** [`docs/conventions.md`](docs/conventions.md)  
+**Architecture decisions:** [`docs/adr/`](docs/adr/)
+
 ## Migration Rules
 
 ### Components (highest priority)
@@ -63,9 +66,17 @@ This project is a migration from AngularJS (1.x) to Angular (17+). Follow these 
 | `$postLink` | `ngAfterViewInit` |
 
 ### Two-Way Binding / Events
-- `&` bindings (callbacks) → `@Output() EventEmitter`
-- `<` bindings (one-way in) → `@Input()`
-- `=` bindings (two-way) → `@Input()` + `@Output() fooChange`
+
+Prefer the **signal-based API** (Angular 17.1+) over decorators for all new code:
+
+| AngularJS binding | Angular (signal API — preferred) | Angular (decorator API — legacy, avoid) |
+|-------------------|-----------------------------------|-----------------------------------------|
+| `<` one-way in | `foo = input<T>()` / `input.required<T>()` | `@Input() foo: T` |
+| `&` callback | `save = output<T>()` | `@Output() save = new EventEmitter<T>()` |
+| `=` two-way | `bar = model<T>()` | `@Input() bar` + `@Output() barChange` |
+
+- Use `input.required<T>()` when the binding is mandatory.
+- Use `model<T>()` to replace any AngularJS `=` (two-way) binding.
 
 ## What to Avoid
 - Do NOT use `$scope` anywhere in migrated code

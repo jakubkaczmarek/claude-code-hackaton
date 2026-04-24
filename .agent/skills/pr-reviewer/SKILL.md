@@ -15,8 +15,13 @@ When reviewing a pull request for this AngularJS → Angular 17 migration projec
 2. **Key Focus Areas**:
    - **Comprehensive Reviews**: You **MUST always** perform a deep, comprehensive review of the _entire_ pull request. If the user asks you to look into a specific issue, file, or area of concern, you must investigate that specific area _in addition to_ reviewing the rest of the PR's substantive changes. Do not terminate your review after addressing only the user's focal point.
    - **Migration Correctness**: Verify that all migrated code follows the rules in `CLAUDE.md`. Flag any leftover AngularJS patterns (`$scope`, `ng-*` attributes, `.controller(`, `.factory(`, `$http`, `$q`, `$timeout`, `$broadcast`, `$emit`, `$rootScope`).
-   - **Angular 17 Standards**: Every component must have `standalone: true`, `ChangeDetectionStrategy.OnPush`, and use `inject()` for DI. Flag violations.
-   - **Template syntax**: New templates must use `@if` / `@for` control flow. Flag `*ngIf` / `*ngFor` in new code.
+   - **Angular 17 Standards**: Every component must have `standalone: true`, `ChangeDetectionStrategy.OnPush`, and use `inject()` for DI. Flag violations. Specifically check:
+     - `@Component` decorator contains `changeDetection: ChangeDetectionStrategy.OnPush` (not just `standalone: true`)
+     - No `constructor(private ...)` injection — only `inject()` at field level
+     - New inputs use `input()` / `input.required()`, not `@Input()` decorator
+     - New outputs use `output()`, not `@Output() EventEmitter`
+     - Two-way bindings use `model()`, not `@Input()` + `@Output() fooChange` pairs
+   - **Template syntax**: New templates must use `@if` / `@for` / `@switch` control flow blocks. Flag any `*ngIf`, `*ngFor`, `*ngSwitch`, or `[ngSwitch]` in new code — these are banned in favour of built-in control flow.
    - **Commit Messages**: Evaluate the quality of commit messages. They should explain the _why_ behind the change, not just the _what_.
    - **Code Cleanliness**: Ensure the code is readable, maintainable, and follows the conventions in `CLAUDE.md`.
    - **TypeScript types**: No `any` unless documented as unavoidable. Flag untyped HTTP responses, untyped EventEmitters.
