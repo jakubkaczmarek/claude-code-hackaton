@@ -18,7 +18,7 @@ Since we are writing all components fresh during migration (not porting behavior
 
 ## Decision
 
-**Every migrated `@Component` must use `ChangeDetectionStrategy.OnPush`.**
+**Every `@Component` must use `ChangeDetectionStrategy.OnPush`.** This rule applies only to `@Component` — `@Directive` and `@Pipe` classes do not have a change detection strategy and are unaffected.
 
 ```ts
 @Component({
@@ -62,5 +62,5 @@ Only when subscribing to observables manually inside lifecycle hooks and updatin
 - Debugging change detection issues is harder than with Default.
 - AngularJS `$watch`-style deep object observation has no equivalent — shallow reference comparison only (mitigated by using signals).
 
-**Rule encoded in `CLAUDE.md`:** Every component must use `ChangeDetectionStrategy.OnPush`.  
-**Enforced by:** `pr-reviewer` skill review criteria and the `/audit` command pattern scan.
+**Rule encoded in `CLAUDE.md`:** Every `@Component` must use `ChangeDetectionStrategy.OnPush`.  
+**Enforced by:** `pr-reviewer` skill review criteria (see `.agent/skills/pr-reviewer/SKILL.md`) and the `/audit` command (see `.claude/commands/audit.md`) which scans for missing `OnPush` in the codebase.

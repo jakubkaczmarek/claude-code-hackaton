@@ -304,21 +304,33 @@ export class OrderListComponent {
 
 ### Subscription cleanup
 
+Use this decision tree:
+
+| Situation | Pattern |
+|-----------|---------|
+| Read-only async data for display | `toSignal(obs$, { initialValue: ... })` — no cleanup needed |
+| Async data with side effects on arrival | `takeUntilDestroyed()` + `.subscribe()` |
+| Observable set up inside a lifecycle hook | `takeUntilDestroyed(this.destroyRef)` with explicit `DestroyRef` |
+
 ```ts
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class OrderListComponent {
+  // Preferred: toSignal() handles cleanup automatically
+  readonly orders = toSignal(this.orderService.orders$, { initialValue: [] });
+
+  // When side effects are needed — inject DestroyRef explicitly for lifecycle hook use
   private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.orderService.poll()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(orders => this._orders.set(orders));
+      .subscribe(orders => this.logger.log(orders));  // side effect
   }
 }
 ```
 
-Prefer `toSignal()` over manual subscriptions — it handles cleanup automatically.
+At field level (outside lifecycle hooks), `takeUntilDestroyed()` can be called without arguments.
 
 ---
 

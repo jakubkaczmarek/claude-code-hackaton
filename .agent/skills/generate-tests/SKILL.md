@@ -1,6 +1,6 @@
 ---
 name: Generate Angular Unit Tests
-description: Generates a basic Angular 17 unit test file (.spec.ts) for a freshly migrated component, service, pipe, or directive using TestBed and Jest/Jasmine.
+description: Generates a basic Angular 17 unit test file (.spec.ts) for a freshly migrated component, service, pipe, or directive using TestBed and Vitest/Jest.
 ---
 
 # Generate Angular Unit Tests
@@ -25,11 +25,14 @@ Read the file at `$ARGUMENTS` and identify:
 
 ## Step 2 — Determine Test Framework
 
-Check `package.json` for:
+Check `package.json` for the following in order of preference:
+- `vitest` → use Vitest (`describe`, `it`, `expect`, `vi.fn()`) — **preferred by Angular team**
 - `jest` → use Jest (`describe`, `it`, `expect`, `jest.fn()`)
 - `jasmine` / `karma` → use Jasmine (`describe`, `it`, `expect`, `jasmine.createSpy()`)
 
-Default to Jest if unclear.
+Default to Vitest if no framework is detected yet (new project).
+
+Use the **Act → Wait → Assert** pattern: do NOT call `fixture.detectChanges()`. Use `await fixture.whenStable()` after state changes instead.
 
 ---
 
