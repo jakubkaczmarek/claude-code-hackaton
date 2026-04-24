@@ -1,0 +1,22 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__brand {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.active-link {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.main-content {
+  min-height: calc(100vh - 64px);
+}

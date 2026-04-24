@@ -1,0 +1,183 @@
+@if (loading()) {
+  <div class="detail-state">
+    <mat-spinner diameter="56" />
+  </div>
+}
+
+@if (!loading()) {
+  @if (property(); as prop) {
+    <div class="container detail-page">
+
+      <!-- Breadcrumb -->
+      <nav class="detail-page__breadcrumb">
+        <a mat-button routerLink="/properties">
+          <mat-icon>arrow_back</mat-icon> All Properties
+        </a>
+        <span class="detail-page__breadcrumb-sep">/</span>
+        <span class="detail-page__breadcrumb-title">{{ prop.title }}</span>
+      </nav>
+
+      <div class="detail-page__layout">
+
+        <!-- ── Main column ── -->
+        <div class="detail-main">
+
+          <!-- Gallery -->
+          <mat-card class="detail-gallery">
+            <div class="detail-gallery__main">
+              <img [src]="activeImage()" [alt]="prop.title"
+                   onerror="this.src='https://placehold.co/900x500/e0e0e0/9e9e9e?text=No+Image'" />
+            </div>
+            @if (prop.images.length > 1) {
+              <div class="detail-gallery__thumbs">
+                @for (img of prop.images; track img) {
+                  <img [src]="img" [alt]="prop.title"
+                       [class.active]="img === activeImage()"
+                       (click)="setActiveImage(img)" />
+                }
+              </div>
+            }
+          </mat-card>
+
+          <!-- Header -->
+          <div class="detail-header">
+            <div class="detail-header__top">
+              <div>
+                <h1 class="detail-header__title">{{ prop.title }}</h1>
+                <p class="detail-header__address">
+                  <mat-icon inline>location_on</mat-icon> {{ getFullAddress() }}
+                </p>
+              </div>
+              <div class="detail-header__badges">
+                <app-status-badge [status]="prop.status" />
+                <button mat-stroked-button [color]="isFav() ? 'warn' : 'primary'" (click)="toggleFav()">
+                  <mat-icon>{{ isFav() ? 'favorite' : 'favorite_border' }}</mat-icon>
+                  {{ isFav() ? 'Saved' : 'Save' }}
+                </button>
+              </div>
+            </div>
+            <p class="detail-header__price">{{ priceDisplay() }}</p>
+          </div>
+
+          <mat-divider />
+
+          <!-- Stats -->
+          <div class="detail-stats">
+            @if (prop.bedrooms > 0) {
+              <div class="stat-item">
+                <mat-icon>bed</mat-icon>
+                <span class="stat-item__value">{{ prop.bedrooms }}</span>
+                <span class="stat-item__label">Beds</span>
+              </div>
+            }
+            @if (prop.bathrooms > 0) {
+              <div class="stat-item">
+                <mat-icon>bathtub</mat-icon>
+                <span class="stat-item__value">{{ prop.bathrooms }}</span>
+                <span class="stat-item__label">Baths</span>
+              </div>
+            }
+            @if (prop.parkingSpaces > 0) {
+              <div class="stat-item">
+                <mat-icon>directions_car</mat-icon>
+                <span class="stat-item__value">{{ prop.parkingSpaces }}</span>
+                <span class="stat-item__label">Parking</span>
+              </div>
+            }
+            <div class="stat-item">
+              <mat-icon>square_foot</mat-icon>
+              <span class="stat-item__value">{{ prop.areaSqft }}</span>
+              <span class="stat-item__label">sqft</span>
+            </div>
+            @if (prop.yearBuilt > 0) {
+              <div class="stat-item">
+                <mat-icon>calendar_today</mat-icon>
+                <span class="stat-item__value">{{ prop.yearBuilt }}</span>
+                <span class="stat-item__label">Built</span>
+              </div>
+            }
+          </div>
+
+          <mat-divider />
+
+          <!-- Description -->
+          <section class="detail-section">
+            <h2>About this property</h2>
+            <p class="detail-section__body">{{ prop.description }}</p>
+          </section>
+
+          <!-- Features -->
+          @if (prop.features.length > 0) {
+            <section class="detail-section">
+              <h2>Features</h2>
+              <mat-chip-set>
+                @for (f of prop.features; track f) {
+                  <mat-chip>{{ f }}</mat-chip>
+                }
+              </mat-chip-set>
+            </section>
+          }
+
+          <!-- Map -->
+          @if (mapUrl()) {
+            <section class="detail-section">
+              <h2>Location</h2>
+              <div class="detail-map">
+                <iframe [src]="mapUrl()!" width="100%" height="320"
+                        frameborder="0" style="border:0" allowfullscreen loading="lazy"></iframe>
+              </div>
+            </section>
+          }
+
+          <!-- Related -->
+          @if (related().length > 0) {
+            <section class="detail-section">
+              <h2>Similar Properties</h2>
+              <div class="property-grid property-grid--compact">
+                @for (rel of related(); track rel.id) {
+                  <app-property-card [property]="rel" />
+                }
+              </div>
+            </section>
+          }
+
+        </div>
+
+        <!-- ── Sidebar ── -->
+        <aside class="detail-sidebar">
+          @if (agent(); as ag) {
+            <mat-card class="agent-card">
+              <div class="agent-card__photo-wrap">
+                <img [src]="ag.photo" [alt]="ag.name"
+                     onerror="this.src='https://placehold.co/120x120/e0e0e0/9e9e9e?text=Agent'" />
+              </div>
+              <mat-card-content>
+                <h3 class="agent-card__name">{{ ag.name }}</h3>
+                <p class="agent-card__title">{{ ag.title }}</p>
+                <p class="agent-card__agency">{{ ag.agency }}</p>
+                <div class="agent-card__contacts">
+                  <a mat-button [href]="'tel:' + ag.phone">
+                    <mat-icon>phone</mat-icon> {{ ag.phone }}
+                  </a>
+                  <a mat-button [href]="'mailto:' + ag.email">
+                    <mat-icon>email</mat-icon> {{ ag.email }}
+                  </a>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="contact-card">
+              <mat-card-header>
+                <mat-card-title>Request a Viewing</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <app-contact-form [agent]="ag" />
+              </mat-card-content>
+            </mat-card>
+          }
+        </aside>
+
+      </div>
+    </div>
+  }
+}

@@ -1,0 +1,63 @@
+<div class="contact-form">
+
+  @if (showSuccess()) {
+    <div class="contact-form__success">
+      <mat-icon>check_circle</mat-icon>
+      <div>
+        <strong>Request sent!</strong>
+        <p>{{ agent().name }} will be in touch soon.</p>
+      </div>
+      <button mat-button (click)="reset()">New request</button>
+    </div>
+  } @else {
+
+    <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" novalidate>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Your Name</mat-label>
+        <input matInput [(ngModel)]="formData.name" name="name" required />
+        <mat-error>Name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="formData.email" name="email" required email />
+        <mat-error>Valid email is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone (optional)</mat-label>
+        <input matInput type="tel" [(ngModel)]="formData.phone" name="phone" />
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Message</mat-label>
+        <textarea matInput rows="3"
+                  [(ngModel)]="formData.message" name="message" required
+                  placeholder="I'm interested in this property..."></textarea>
+        <mat-error>Message is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Preferred Viewing Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="formData.viewingDate" name="viewingDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker" />
+        <mat-datepicker #picker />
+      </mat-form-field>
+
+      <div class="contact-form__radio-group">
+        <label class="contact-form__radio-label">Preferred contact</label>
+        <mat-radio-group [(ngModel)]="formData.preferredContact" name="preferredContact" color="primary">
+          <mat-radio-button value="email">Email</mat-radio-button>
+          <mat-radio-button value="phone">Phone</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" class="full-width">
+        <mat-icon>send</mat-icon> Send Request
+      </button>
+
+    </form>
+  }
+</div>

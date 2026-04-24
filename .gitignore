@@ -1,0 +1,6 @@
+
+src/node_modules/*
+
+src/.angular/cache/*
+
+src/dist/*
