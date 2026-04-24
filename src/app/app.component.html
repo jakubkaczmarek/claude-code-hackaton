@@ -1,15 +1,16 @@
-<nav class="navbar">
-  <a class="navbar__brand" routerLink="/properties">&#127968; PropBoard</a>
-  <div class="navbar__links">
-    <a class="navbar__link" routerLink="/properties">Properties</a>
-    <a class="navbar__link" routerLink="/favorites">
-      Favorites
-      @if (favCount() > 0) {
-        <span class="navbar__fav-badge">{{ favCount() }}</span>
-      }
-    </a>
-  </div>
-</nav>
+<mat-toolbar color="primary" class="app-toolbar">
+  <a mat-button routerLink="/properties" class="app-toolbar__brand">
+    <mat-icon>home</mat-icon>
+    <span>PropBoard</span>
+  </a>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/properties" routerLinkActive="active-link">Properties</a>
+  <a mat-button routerLink="/favorites" routerLinkActive="active-link"
+     [matBadge]="favCount() > 0 ? favCount() : null" matBadgeColor="accent" matBadgeSize="small">
+    <mat-icon>favorite_border</mat-icon>
+    Favorites
+  </a>
+</mat-toolbar>
 
 <div class="main-content">
   <router-outlet />

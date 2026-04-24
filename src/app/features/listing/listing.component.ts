@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Property } from '../../core/models/property.model';
 import { FilterOptions } from '../../core/models/filter.model';
 import { FilterService } from '../../core/services/filter.service';
@@ -11,8 +16,9 @@ import { PropertyCardComponent } from '../../shared/components/property-card/pro
 @Component({
   selector: 'app-listing',
   standalone: true,
-  imports: [FormsModule, FilterPanelComponent, PropertyCardComponent],
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, FilterPanelComponent, PropertyCardComponent],
   templateUrl: './listing.component.html',
+  styleUrl: './listing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListingComponent implements OnInit {

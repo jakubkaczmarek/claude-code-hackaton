@@ -1,87 +1,78 @@
 <div class="filter-panel">
   <div class="filter-panel__row">
 
-    <div class="filter-panel__field">
-      <label>Search</label>
-      <input type="text" class="filter-panel__input"
-        [ngModel]="filters.keyword"
-        (ngModelChange)="updateFilter('keyword', $event)"
-        placeholder="Keyword..." />
-    </div>
+    <mat-form-field appearance="outline" class="filter-panel__field filter-panel__field--wide">
+      <mat-label>Search</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput
+             [ngModel]="filters.keyword"
+             (ngModelChange)="updateFilter('keyword', $event)"
+             placeholder="Keyword, suburb, type..." />
+    </mat-form-field>
 
-    <div class="filter-panel__field">
-      <label>Type</label>
-      <select class="filter-panel__select"
-        [ngModel]="filters.type"
-        (ngModelChange)="updateFilter('type', $event)">
-        <option value="">Any</option>
-        <option value="house">House</option>
-        <option value="apartment">Apartment</option>
-        <option value="condo">Condo</option>
-        <option value="commercial">Commercial</option>
-        <option value="land">Land</option>
-      </select>
-    </div>
+    <mat-form-field appearance="outline" class="filter-panel__field">
+      <mat-label>Type</mat-label>
+      <mat-select [ngModel]="filters.type" (ngModelChange)="updateFilter('type', $event)">
+        <mat-option value="">Any</mat-option>
+        <mat-option value="house">House</mat-option>
+        <mat-option value="apartment">Apartment</mat-option>
+        <mat-option value="condo">Condo</mat-option>
+        <mat-option value="commercial">Commercial</mat-option>
+        <mat-option value="land">Land</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="filter-panel__field">
-      <label>Status</label>
-      <select class="filter-panel__select"
-        [ngModel]="filters.status"
-        (ngModelChange)="updateFilter('status', $event)">
-        <option value="">Any</option>
-        <option value="for-sale">For Sale</option>
-        <option value="for-rent">For Rent</option>
-        <option value="sold">Sold</option>
-        <option value="under-offer">Under Offer</option>
-      </select>
-    </div>
+    <mat-form-field appearance="outline" class="filter-panel__field">
+      <mat-label>Status</mat-label>
+      <mat-select [ngModel]="filters.status" (ngModelChange)="updateFilter('status', $event)">
+        <mat-option value="">Any</mat-option>
+        <mat-option value="for-sale">For Sale</mat-option>
+        <mat-option value="for-rent">For Rent</mat-option>
+        <mat-option value="sold">Sold</mat-option>
+        <mat-option value="under-offer">Under Offer</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="filter-panel__field">
-      <label>Location</label>
-      <select class="filter-panel__select"
-        [ngModel]="filters.location"
-        (ngModelChange)="updateFilter('location', $event)">
-        <option value="">Any</option>
+    <mat-form-field appearance="outline" class="filter-panel__field">
+      <mat-label>Location</mat-label>
+      <mat-select [ngModel]="filters.location" (ngModelChange)="updateFilter('location', $event)">
+        <mat-option value="">Any</mat-option>
         @for (loc of locations(); track loc.name) {
-          <option [value]="loc.name">{{ loc.name }}</option>
+          <mat-option [value]="loc.name">{{ loc.name }}</mat-option>
         }
-      </select>
-    </div>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="filter-panel__field">
-      <label>Min Beds</label>
-      <select class="filter-panel__select"
-        [ngModel]="filters.bedroomsMin"
-        (ngModelChange)="updateFilter('bedroomsMin', $event)">
+    <mat-form-field appearance="outline" class="filter-panel__field filter-panel__field--narrow">
+      <mat-label>Min Beds</mat-label>
+      <mat-select [ngModel]="filters.bedroomsMin" (ngModelChange)="updateFilter('bedroomsMin', $event)">
         @for (opt of bedroomOptions; track opt.value) {
-          <option [value]="opt.value">{{ opt.label }}</option>
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
         }
-      </select>
-    </div>
+      </mat-select>
+    </mat-form-field>
 
-  </div>
+    <mat-form-field appearance="outline" class="filter-panel__field filter-panel__field--narrow">
+      <mat-label>Min Price</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number"
+             [ngModel]="filters.priceMin"
+             (ngModelChange)="updateFilter('priceMin', $event)"
+             placeholder="0" />
+    </mat-form-field>
 
-  <div class="filter-panel__row">
+    <mat-form-field appearance="outline" class="filter-panel__field filter-panel__field--narrow">
+      <mat-label>Max Price</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number"
+             [ngModel]="filters.priceMax"
+             (ngModelChange)="updateFilter('priceMax', $event)"
+             placeholder="Any" />
+    </mat-form-field>
 
-    <div class="filter-panel__field">
-      <label>Min Price ($)</label>
-      <input type="number" class="filter-panel__input"
-        [ngModel]="filters.priceMin"
-        (ngModelChange)="updateFilter('priceMin', $event)"
-        placeholder="0" />
-    </div>
-
-    <div class="filter-panel__field">
-      <label>Max Price ($)</label>
-      <input type="number" class="filter-panel__input"
-        [ngModel]="filters.priceMax"
-        (ngModelChange)="updateFilter('priceMax', $event)"
-        placeholder="Any" />
-    </div>
-
-    <div class="filter-panel__field filter-panel__field--clear">
-      <button class="filter-panel__clear-btn" (click)="clearAll()">Clear Filters</button>
-    </div>
+    <button mat-stroked-button class="filter-panel__clear" (click)="clearAll()">
+      <mat-icon>clear</mat-icon> Clear
+    </button>
 
   </div>
 </div>

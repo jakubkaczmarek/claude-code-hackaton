@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   selector: 'app-status-badge',
   standalone: true,
   templateUrl: './status-badge.component.html',
+  styleUrl: './status-badge.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusBadgeComponent {
@@ -16,17 +17,6 @@ export class StatusBadgeComponent {
       case 'sold':        return 'Sold';
       case 'under-offer': return 'Under Offer';
       default:            return this.status();
-    }
-  });
-
-  readonly cssClass = computed(() => {
-    const base = 'badge';
-    switch (this.status()) {
-      case 'for-sale':    return `${base} badge--for-sale`;
-      case 'for-rent':    return `${base} badge--for-rent`;
-      case 'sold':        return `${base} badge--sold`;
-      case 'under-offer': return `${base} badge--under-offer`;
-      default:            return base;
     }
   });
 }

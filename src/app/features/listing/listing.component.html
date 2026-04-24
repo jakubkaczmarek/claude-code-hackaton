@@ -1,32 +1,38 @@
-<div class="listing-page">
+<app-filter-panel />
 
-  <app-filter-panel />
+<div class="container listing-page">
 
-  <div class="listing-page__results-bar">
-    <div class="listing-page__count">
-      Showing {{ properties().length }} of {{ totalCount() }} properties
-    </div>
-    <div class="listing-page__sort">
-      <label>Sort by:</label>
-      <select [ngModel]="sortKey()" (ngModelChange)="changeSort($event)">
-        <option value="newest">Newest</option>
-        <option value="price-asc">Price (Low &rarr; High)</option>
-        <option value="price-desc">Price (High &rarr; Low)</option>
-        <option value="bedrooms-desc">Most Bedrooms</option>
-      </select>
-    </div>
+  <div class="listing-page__toolbar">
+    <p class="listing-page__count">
+      @if (!loading()) {
+        Showing <strong>{{ properties().length }}</strong> of <strong>{{ totalCount() }}</strong> properties
+      }
+    </p>
+    <mat-form-field appearance="outline" class="listing-page__sort">
+      <mat-label>Sort by</mat-label>
+      <mat-select [ngModel]="sortKey()" (ngModelChange)="changeSort($event)">
+        <mat-option value="newest">Newest</mat-option>
+        <mat-option value="price-asc">Price: Low → High</mat-option>
+        <mat-option value="price-desc">Price: High → Low</mat-option>
+        <mat-option value="bedrooms-desc">Most Bedrooms</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   @if (loading()) {
-    <div class="listing-page__loading">
-      <p>Loading properties...</p>
+    <div class="listing-page__state">
+      <mat-spinner diameter="48" />
+      <p>Loading properties…</p>
     </div>
   }
 
   @if (!loading() && properties().length === 0) {
-    <div class="listing-page__empty">
-      <p>No properties match your search.</p>
-      <a href="" (click)="clearFilters(); $event.preventDefault()">Clear filters</a>
+    <div class="listing-page__state">
+      <mat-icon class="listing-page__empty-icon">search_off</mat-icon>
+      <p>No properties match your filters.</p>
+      <button mat-stroked-button color="primary" (click)="clearFilters()">
+        <mat-icon>clear</mat-icon> Clear filters
+      </button>
     </div>
   }
 

@@ -1,31 +1,36 @@
-<div class="property-card">
-  <div class="property-card__image-wrap">
-    <img class="property-card__image" [src]="thumbImg()" [alt]="property().title" onerror="this.src='assets/img/placeholder.jpg'" />
-    <app-status-badge [status]="property().status" />
-    <button class="property-card__fav-btn" (click)="toggleFav()" title="Save property">
-      @if (isFav()) {
-        <span>&#9829;</span>
-      } @else {
-        <span>&#9825;</span>
-      }
-    </button>
+<mat-card class="property-card">
+  <div class="property-card__media">
+    <img class="property-card__image"
+         [src]="thumbImg()" [alt]="property().title"
+         onerror="this.src='https://placehold.co/400x260/e0e0e0/9e9e9e?text=No+Image'" />
+    <div class="property-card__overlay">
+      <app-status-badge [status]="property().status" />
+      <button mat-icon-button class="property-card__fav" (click)="toggleFav(); $event.preventDefault()">
+        <mat-icon [class.faved]="isFav()">{{ isFav() ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+    </div>
   </div>
 
-  <div class="property-card__body">
-    <div class="property-card__price">{{ priceDisplay() }}</div>
-    <div class="property-card__title">{{ property().title }}</div>
-    <div class="property-card__address">{{ addressLine() }}</div>
-
+  <mat-card-content class="property-card__content">
+    <p class="property-card__price">{{ priceDisplay() }}</p>
+    <h3 class="property-card__title">{{ property().title }}</h3>
+    <p class="property-card__address">
+      <mat-icon inline>location_on</mat-icon> {{ addressLine() }}
+    </p>
     <div class="property-card__stats">
       @if (property().bedrooms > 0) {
-        <span class="property-card__stat">&#127968; {{ property().bedrooms }} bed</span>
+        <span class="stat"><mat-icon inline>bed</mat-icon> {{ property().bedrooms }}</span>
       }
       @if (property().bathrooms > 0) {
-        <span class="property-card__stat">&#128706; {{ property().bathrooms }} bath</span>
+        <span class="stat"><mat-icon inline>bathtub</mat-icon> {{ property().bathrooms }}</span>
       }
-      <span class="property-card__stat">&#9634; {{ property().areaSqft }} sqft</span>
+      <span class="stat"><mat-icon inline>square_foot</mat-icon> {{ property().areaSqft }}</span>
     </div>
+  </mat-card-content>
 
-    <a class="property-card__link" [routerLink]="['/properties', property().id]">View Details &rarr;</a>
-  </div>
-</div>
+  <mat-card-actions align="end">
+    <a mat-button color="primary" [routerLink]="['/properties', property().id]">
+      View Details <mat-icon>arrow_forward</mat-icon>
+    </a>
+  </mat-card-actions>
+</mat-card>

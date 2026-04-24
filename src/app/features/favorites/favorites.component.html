@@ -1,21 +1,26 @@
-<div class="favorites-page">
+<div class="container favorites-page">
 
-  <h1 class="favorites-page__title">Your Saved Properties</h1>
-
-  @if (!isEmpty()) {
-    <p class="favorites-page__count">{{ properties().length }} properties saved</p>
-  }
+  <div class="favorites-page__header">
+    <h1>Saved Properties</h1>
+    @if (!isEmpty() && !loading()) {
+      <p>{{ properties().length }} {{ properties().length === 1 ? 'property' : 'properties' }} saved</p>
+    }
+  </div>
 
   @if (loading()) {
-    <div class="favorites-page__loading">
-      <p>Loading...</p>
+    <div class="favorites-page__state">
+      <mat-spinner diameter="48" />
     </div>
   }
 
   @if (!loading() && isEmpty()) {
-    <div class="favorites-page__empty">
-      <p>&#9825; You haven't saved any properties yet.</p>
-      <a routerLink="/properties" class="favorites-page__cta">Browse all properties</a>
+    <div class="favorites-page__state">
+      <mat-icon class="favorites-page__empty-icon">favorite_border</mat-icon>
+      <h2>No saved properties yet</h2>
+      <p>Save properties you love by clicking the heart icon on any listing.</p>
+      <a mat-raised-button color="primary" routerLink="/properties">
+        <mat-icon>search</mat-icon> Browse Properties
+      </a>
     </div>
   }
 

@@ -5,6 +5,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Agent } from '../../core/models/agent.model';
 import { Property } from '../../core/models/property.model';
 import { AgentService } from '../../core/services/agent.service';
@@ -17,8 +23,9 @@ import { StatusBadgeComponent } from '../../shared/components/status-badge/statu
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [RouterLink, StatusBadgeComponent, PropertyCardComponent, ContactFormComponent],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatChipsModule, MatCardModule, MatDividerModule, MatProgressSpinnerModule, StatusBadgeComponent, PropertyCardComponent, ContactFormComponent],
   templateUrl: './detail.component.html',
+  styleUrl: './detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent implements OnInit {
@@ -54,40 +61,28 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     const propId = this.route.snapshot.params['id'] as string;
-
     this.propertyService.getById(propId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
         this.property.set(data);
         this.loading.set(false);
-
-        if (data.images?.length > 0) {
-          this.activeImage.set(data.images[0]);
-        }
-
+        if (data.images?.length > 0) this.activeImage.set(data.images[0]);
         if (data.coordinates) {
           const raw = `https://maps.google.com/maps?q=${data.coordinates.lat},${data.coordinates.lng}&z=15&output=embed`;
           this.mapUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(raw));
         }
-
         this.agentService.getById(data.agentId)
           .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(agentData => this.agent.set(agentData));
-
+          .subscribe(ag => this.agent.set(ag));
         this.propertyService.getAll()
           .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(allProps => {
-            const rel = allProps
-              .filter(p => p.id !== data.id && (p.location === data.location || p.type === data.type))
-              .slice(0, 3);
-            this.related.set(rel);
+          .subscribe(all => {
+            this.related.set(all.filter(p => p.id !== data.id && (p.location === data.location || p.type === data.type)).slice(0, 3));
           });
       });
   }
 
-  setActiveImage(imgUrl: string): void {
-    this.activeImage.set(imgUrl);
-  }
+  setActiveImage(url: string): void { this.activeImage.set(url); }
 
   toggleFav(): void {
     const p = this.property();
