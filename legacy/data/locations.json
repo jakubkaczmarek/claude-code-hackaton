@@ -1,0 +1,38 @@
+[
+  {
+    "id": "loc-001",
+    "name": "Riverside",
+    "city": "Austin",
+    "state": "TX"
+  },
+  {
+    "id": "loc-002",
+    "name": "Lakewood",
+    "city": "Austin",
+    "state": "TX"
+  },
+  {
+    "id": "loc-003",
+    "name": "Highland Park",
+    "city": "Austin",
+    "state": "TX"
+  },
+  {
+    "id": "loc-004",
+    "name": "Westfield",
+    "city": "Austin",
+    "state": "TX"
+  },
+  {
+    "id": "loc-005",
+    "name": "Cedar Valley",
+    "city": "Austin",
+    "state": "TX"
+  },
+  {
+    "id": "loc-006",
+    "name": "Northgate",
+    "city": "Austin",
+    "state": "TX"
+  }
+]
